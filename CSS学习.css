@@ -1,0 +1,764 @@
+/* ============================================
+   CSS学习指南 - 全面系统知识点
+   ============================================ */
+
+/* ========== 1. CSS变量（自定义属性） ========== */
+:root {
+    /* 定义CSS变量，可以在整个文档中复用 */
+    --primary-color: #3498db;        /* 主色调 */
+    --secondary-color: #2ecc71;      /* 次色调 */
+    --text-color: #333333;           /* 文本颜色 */
+    --bg-color: #f5f5f5;             /* 背景颜色 */
+    --spacing-unit: 16px;            /* 间距单位 */
+    --border-radius: 8px;             /* 圆角大小 */
+    --transition-speed: 0.3s;         /* 过渡速度 */
+}
+
+/* ========== 2. 通用重置和基础样式 ========== */
+* {
+    /* 通配符选择器，选择所有元素 */
+    margin: 0;                       /* 外边距重置为0 */
+    padding: 0;                      /* 内边距重置为0 */
+    box-sizing: border-box;          /* 盒模型：宽度包含padding和border */
+}
+
+body {
+    /* 选择body元素 */
+    font-family: 'Arial', 'Microsoft YaHei', sans-serif;  /* 字体族 */
+    font-size: 16px;                 /* 字体大小 */
+    line-height: 1.6;                /* 行高（1.6倍字体大小） */
+    color: var(--text-color);        /* 使用CSS变量设置文本颜色 */
+    background-color: var(--bg-color); /* 使用CSS变量设置背景颜色 */
+    padding: var(--spacing-unit);     /* 使用CSS变量设置内边距 */
+}
+
+/* ========== 3. 标题样式 ========== */
+h1 {
+    /* 选择所有h1元素 */
+    color: var(--primary-color);     /* 使用变量设置颜色 */
+    font-size: 2.5em;                /* 字体大小（2.5倍基础大小） */
+    margin-bottom: var(--spacing-unit); /* 下外边距 */
+    text-align: center;              /* 文本居中对齐 */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* 文本阴影：水平偏移 垂直偏移 模糊半径 颜色 */
+}
+
+h2 {
+    /* 选择所有h2元素 */
+    color: var(--secondary-color);   /* 使用变量设置颜色 */
+    font-size: 2em;                  /* 字体大小 */
+    margin-top: calc(var(--spacing-unit) * 2); /* 使用calc()计算上外边距 */
+    margin-bottom: var(--spacing-unit); /* 下外边距 */
+    border-bottom: 2px solid var(--primary-color); /* 底部边框：宽度 样式 颜色 */
+    padding-bottom: calc(var(--spacing-unit) / 2); /* 底部内边距 */
+}
+
+h3 {
+    /* 选择所有h3元素 */
+    color: #555;                     /* 颜色值（十六进制） */
+    font-size: 1.5em;                /* 字体大小 */
+    margin-top: var(--spacing-unit); /* 上外边距 */
+    margin-bottom: calc(var(--spacing-unit) / 2); /* 下外边距 */
+}
+
+/* ========== 4. 容器和布局 ========== */
+.container {
+    /* 类选择器，选择class="container"的元素 */
+    max-width: 1200px;               /* 最大宽度 */
+    margin: 0 auto;                  /* 水平居中：上下0，左右自动 */
+    padding: var(--spacing-unit);    /* 内边距 */
+    background-color: white;         /* 背景颜色 */
+    border-radius: var(--border-radius); /* 圆角 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* 盒子阴影：水平偏移 垂直偏移 模糊半径 颜色 */
+}
+
+.section {
+    /* 选择class="section"的元素 */
+    margin-bottom: calc(var(--spacing-unit) * 2); /* 下外边距 */
+    padding: var(--spacing-unit);    /* 内边距 */
+    background-color: #fafafa;       /* 背景颜色 */
+    border-left: 4px solid var(--primary-color); /* 左边框：宽度 样式 颜色 */
+    border-radius: var(--border-radius); /* 圆角 */
+}
+
+/* ========== 5. 文本样式 ========== */
+p {
+    /* 选择所有p元素 */
+    margin-bottom: var(--spacing-unit); /* 下外边距 */
+    text-align: justify;             /* 文本两端对齐 */
+    text-indent: 2em;                /* 首行缩进（2个字符宽度） */
+}
+
+.text-bold {
+    /* 选择class="text-bold"的元素 */
+    font-weight: bold;               /* 字体粗细：粗体 */
+}
+
+.text-italic {
+    /* 选择class="text-italic"的元素 */
+    font-style: italic;              /* 字体样式：斜体 */
+}
+
+.text-underline {
+    /* 选择class="text-underline"的元素 */
+    text-decoration: underline;     /* 文本装饰：下划线 */
+}
+
+.text-center {
+    /* 选择class="text-center"的元素 */
+    text-align: center;              /* 文本居中对齐 */
+}
+
+/* ========== 6. 盒模型演示 ========== */
+.box-model {
+    /* 选择class="box-model"的元素 */
+    width: 300px;                    /* 宽度 */
+    height: 200px;                   /* 高度 */
+    padding: 20px;                   /* 内边距（四个方向） */
+    margin: 20px auto;               /* 外边距：上下20px，左右自动（居中） */
+    border: 5px solid var(--primary-color); /* 边框：宽度 样式 颜色 */
+    background-color: #e8f4f8;       /* 背景颜色 */
+    box-sizing: border-box;          /* 盒模型：宽度包含padding和border */
+}
+
+/* ========== 7. Flexbox布局 ========== */
+.flex-container {
+    /* 选择class="flex-container"的元素 */
+    display: flex;                   /* 设置为flex布局 */
+    flex-direction: row;             /* 主轴方向：行（水平） */
+    justify-content: space-between;  /* 主轴对齐方式：两端对齐 */
+    align-items: center;             /* 交叉轴对齐方式：居中对齐 */
+    flex-wrap: wrap;                 /* 是否换行：允许换行 */
+    gap: var(--spacing-unit);        /* 子元素之间的间距 */
+    padding: var(--spacing-unit);    /* 内边距 */
+    background-color: #fff;          /* 背景颜色 */
+    border-radius: var(--border-radius); /* 圆角 */
+}
+
+.flex-item {
+    /* 选择class="flex-item"的元素 */
+    flex: 1;                         /* flex属性：增长比例 收缩比例 基础大小 */
+    min-width: 200px;                /* 最小宽度 */
+    padding: var(--spacing-unit);    /* 内边距 */
+    background-color: var(--primary-color); /* 背景颜色 */
+    color: white;                    /* 文本颜色 */
+    border-radius: var(--border-radius); /* 圆角 */
+    text-align: center;              /* 文本居中 */
+}
+
+/* ========== 8. Grid布局 ========== */
+.grid-container {
+    /* 选择class="grid-container"的元素 */
+    display: grid;                   /* 设置为grid布局 */
+    grid-template-columns: repeat(3, 1fr); /* 列模板：重复3次，每列1fr（等分） */
+    grid-template-rows: auto;        /* 行模板：自动高度 */
+    gap: var(--spacing-unit);        /* 网格间距 */
+    padding: var(--spacing-unit);    /* 内边距 */
+    background-color: #fff;          /* 背景颜色 */
+    border-radius: var(--border-radius); /* 圆角 */
+}
+
+.grid-item {
+    /* 选择class="grid-item"的元素 */
+    padding: var(--spacing-unit);    /* 内边距 */
+    background-color: var(--secondary-color); /* 背景颜色 */
+    color: white;                    /* 文本颜色 */
+    border-radius: var(--border-radius); /* 圆角 */
+    text-align: center;              /* 文本居中 */
+}
+
+/* ========== 9. 定位（Position） ========== */
+.position-relative {
+    /* 选择class="position-relative"的元素 */
+    position: relative;              /* 相对定位：相对于自身原始位置 */
+    top: 10px;                       /* 距离顶部10px */
+    left: 10px;                      /* 距离左边10px */
+}
+
+.position-absolute {
+    /* 选择class="position-absolute"的元素 */
+    position: absolute;              /* 绝对定位：相对于最近的定位父元素 */
+    top: 0;                          /* 距离顶部0 */
+    right: 0;                        /* 距离右边0 */
+}
+
+.position-fixed {
+    /* 选择class="position-fixed"的元素 */
+    position: fixed;                 /* 固定定位：相对于视口 */
+    bottom: 20px;                    /* 距离底部20px */
+    right: 20px;                     /* 距离右边20px */
+    z-index: 1000;                   /* 层叠顺序：数值越大越在上层 */
+}
+
+.position-sticky {
+    /* 选择class="position-sticky"的元素 */
+    position: sticky;                /* 粘性定位：滚动到阈值时固定 */
+    top: 0;                          /* 距离顶部0时触发 */
+    background-color: white;         /* 背景颜色 */
+    z-index: 100;                    /* 层叠顺序 */
+}
+
+/* ========== 10. 颜色和背景 ========== */
+.color-demo {
+    /* 选择class="color-demo"的元素 */
+    color: rgb(255, 0, 0);           /* RGB颜色值：红 绿 蓝 */
+    background-color: rgba(0, 0, 255, 0.5); /* RGBA颜色值：红 绿 蓝 透明度 */
+    background-image: linear-gradient(45deg, #3498db, #2ecc71); /* 背景图片：线性渐变（角度 颜色1 颜色2） */
+    background-size: cover;          /* 背景大小：覆盖整个元素 */
+    background-position: center;     /* 背景位置：居中 */
+    background-repeat: no-repeat;    /* 背景重复：不重复 */
+}
+
+/* ========== 11. 边框样式 ========== */
+.border-solid {
+    /* 选择class="border-solid"的元素 */
+    border: 2px solid var(--primary-color); /* 边框：宽度 样式（实线） 颜色 */
+}
+
+.border-dashed {
+    /* 选择class="border-dashed"的元素 */
+    border: 2px dashed var(--secondary-color); /* 边框：宽度 样式（虚线） 颜色 */
+}
+
+.border-dotted {
+    /* 选择class="border-dotted"的元素 */
+    border: 2px dotted #999;         /* 边框：宽度 样式（点线） 颜色 */
+}
+
+.border-radius {
+    /* 选择class="border-radius"的元素 */
+    border-radius: var(--border-radius); /* 圆角：四个角 */
+    border-radius: 10px 20px 30px 40px; /* 圆角：分别设置四个角（顺时针） */
+}
+
+/* ========== 12. 阴影效果 ========== */
+.box-shadow {
+    /* 选择class="box-shadow"的元素 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 盒子阴影：水平偏移 垂直偏移 模糊半径 颜色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* 多重阴影 */
+}
+
+.text-shadow {
+    /* 选择class="text-shadow"的元素 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 文本阴影：水平偏移 垂直偏移 模糊半径 颜色 */
+}
+
+/* ========== 13. 过渡效果（Transition） ========== */
+.transition {
+    /* 选择class="transition"的元素 */
+    transition: all var(--transition-speed) ease; /* 过渡：属性 持续时间 时间函数 */
+    transition-property: background-color, color; /* 过渡属性：背景颜色和文本颜色 */
+    transition-duration: 0.3s;       /* 过渡持续时间 */
+    transition-timing-function: ease-in-out; /* 过渡时间函数：缓入缓出 */
+    transition-delay: 0.1s;          /* 过渡延迟 */
+}
+
+.transition:hover {
+    /* 伪类选择器：鼠标悬停时的状态 */
+    background-color: var(--primary-color); /* 背景颜色变化 */
+    color: white;                    /* 文本颜色变化 */
+    transform: scale(1.05);          /* 变换：缩放（1.05倍） */
+}
+
+/* ========== 14. 动画（Animation） ========== */
+@keyframes fadeIn {
+    /* 定义动画关键帧：淡入效果 */
+    from {
+        opacity: 0;                  /* 起始状态：透明度0（完全透明） */
+        transform: translateY(-20px); /* 变换：垂直向上移动20px */
+    }
+    to {
+        opacity: 1;                  /* 结束状态：透明度1（完全不透明） */
+        transform: translateY(0);    /* 变换：回到原位置 */
+    }
+}
+
+@keyframes slideIn {
+    /* 定义动画关键帧：滑入效果 */
+    0% {
+        transform: translateX(-100%); /* 0%：水平向左移动100%（完全在左侧外） */
+        opacity: 0;                  /* 透明度0 */
+    }
+    50% {
+        opacity: 0.5;                /* 50%：透明度0.5 */
+    }
+    100% {
+        transform: translateX(0);    /* 100%：回到原位置 */
+        opacity: 1;                  /* 透明度1 */
+    }
+}
+
+.animate-fadeIn {
+    /* 选择class="animate-fadeIn"的元素 */
+    animation: fadeIn 1s ease-in-out; /* 动画：名称 持续时间 时间函数 */
+    animation-fill-mode: both;       /* 动画填充模式：保持起始和结束状态 */
+}
+
+.animate-slideIn {
+    /* 选择class="animate-slideIn"的元素 */
+    animation: slideIn 1.5s ease-out; /* 动画：名称 持续时间 时间函数 */
+    animation-delay: 0.2s;           /* 动画延迟 */
+    animation-iteration-count: 1;    /* 动画迭代次数：1次 */
+}
+
+/* ========== 15. 变换（Transform） ========== */
+.transform-rotate {
+    /* 选择class="transform-rotate"的元素 */
+    transform: rotate(45deg);        /* 变换：旋转45度 */
+}
+
+.transform-scale {
+    /* 选择class="transform-scale"的元素 */
+    transform: scale(1.2);           /* 变换：缩放1.2倍 */
+}
+
+.transform-translate {
+    /* 选择class="transform-translate"的元素 */
+    transform: translate(10px, 20px); /* 变换：平移（水平10px，垂直20px） */
+}
+
+.transform-skew {
+    /* 选择class="transform-skew"的元素 */
+    transform: skew(10deg, 5deg);    /* 变换：倾斜（水平10度，垂直5度） */
+}
+
+.transform-combined {
+    /* 选择class="transform-combined"的元素 */
+    transform: rotate(45deg) scale(1.1) translate(10px, 10px); /* 组合变换：旋转 缩放 平移 */
+}
+
+/* ========== 16. 伪类和伪元素 ========== */
+.link {
+    /* 选择class="link"的元素 */
+    color: var(--primary-color);     /* 文本颜色 */
+    text-decoration: none;           /* 去除下划线 */
+}
+
+.link:link {
+    /* 伪类：未访问的链接 */
+    color: var(--primary-color);     /* 颜色 */
+}
+
+.link:visited {
+    /* 伪类：已访问的链接 */
+    color: #9b59b6;                  /* 颜色：紫色 */
+}
+
+.link:hover {
+    /* 伪类：鼠标悬停 */
+    color: var(--secondary-color);   /* 颜色变化 */
+    text-decoration: underline;     /* 添加下划线 */
+}
+
+.link:active {
+    /* 伪类：激活状态（点击时） */
+    color: #e74c3c;                  /* 颜色：红色 */
+}
+
+.link:focus {
+    /* 伪类：获得焦点时 */
+    outline: 2px solid var(--primary-color); /* 轮廓：宽度 样式 颜色 */
+    outline-offset: 2px;             /* 轮廓偏移 */
+}
+
+p::first-line {
+    /* 伪元素：段落的第一行 */
+    font-weight: bold;               /* 字体粗细：粗体 */
+    color: var(--primary-color);     /* 颜色 */
+}
+
+p::first-letter {
+    /* 伪元素：段落的第一个字母 */
+    font-size: 2em;                  /* 字体大小：2倍 */
+    float: left;                     /* 浮动：左浮动 */
+    margin-right: 5px;               /* 右边距 */
+    color: var(--primary-color);     /* 颜色 */
+}
+
+.element::before {
+    /* 伪元素：元素之前插入内容 */
+    content: "【";                    /* 内容 */
+    color: var(--primary-color);     /* 颜色 */
+}
+
+.element::after {
+    /* 伪元素：元素之后插入内容 */
+    content: "】";                    /* 内容 */
+    color: var(--primary-color);     /* 颜色 */
+}
+
+/* ========== 17. 列表样式 ========== */
+ul.custom-list {
+    /* 选择class="custom-list"的ul元素 */
+    list-style-type: none;           /* 列表样式类型：无 */
+    padding-left: 0;                 /* 左内边距为0 */
+}
+
+ul.custom-list li {
+    /* 选择ul.custom-list下的li元素 */
+    padding: calc(var(--spacing-unit) / 2); /* 内边距 */
+    margin-bottom: calc(var(--spacing-unit) / 2); /* 下外边距 */
+    background-color: #f0f0f0;       /* 背景颜色 */
+    border-left: 3px solid var(--primary-color); /* 左边框 */
+    list-style-position: inside;     /* 列表标记位置：内部 */
+}
+
+ul.custom-list li::before {
+    /* 伪元素：列表项前添加标记 */
+    content: "✓ ";                   /* 内容：对勾 */
+    color: var(--secondary-color);   /* 颜色 */
+    font-weight: bold;                /* 字体粗细：粗体 */
+    margin-right: 5px;               /* 右边距 */
+}
+
+/* ========== 18. 表格样式 ========== */
+table {
+    /* 选择所有table元素 */
+    width: 100%;                     /* 宽度：100% */
+    border-collapse: collapse;       /* 边框合并：合并相邻边框 */
+    margin: var(--spacing-unit) 0;   /* 外边距：上下 */
+}
+
+th, td {
+    /* 选择所有th和td元素 */
+    padding: calc(var(--spacing-unit) / 2); /* 内边距 */
+    text-align: left;                /* 文本左对齐 */
+    border-bottom: 1px solid #ddd;   /* 底部边框 */
+}
+
+th {
+    /* 选择所有th元素 */
+    background-color: var(--primary-color); /* 背景颜色 */
+    color: white;                    /* 文本颜色 */
+    font-weight: bold;               /* 字体粗细：粗体 */
+}
+
+tr:hover {
+    /* 伪类：鼠标悬停在tr上 */
+    background-color: #f5f5f5;       /* 背景颜色变化 */
+}
+
+tr:nth-child(even) {
+    /* 伪类：偶数行 */
+    background-color: #fafafa;       /* 背景颜色 */
+}
+
+/* ========== 19. 表单样式 ========== */
+input[type="text"],
+input[type="email"],
+textarea {
+    /* 属性选择器：选择type为text或email的input元素和textarea元素 */
+    width: 100%;                     /* 宽度：100% */
+    padding: calc(var(--spacing-unit) / 2); /* 内边距 */
+    border: 1px solid #ddd;          /* 边框 */
+    border-radius: var(--border-radius); /* 圆角 */
+    font-size: 1em;                  /* 字体大小 */
+    transition: border-color var(--transition-speed); /* 过渡：边框颜色 */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    /* 伪类：获得焦点时 */
+    outline: none;                   /* 去除默认轮廓 */
+    border-color: var(--primary-color); /* 边框颜色变化 */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); /* 盒子阴影：聚焦效果 */
+}
+
+button {
+    /* 选择所有button元素 */
+    padding: calc(var(--spacing-unit) / 2) var(--spacing-unit); /* 内边距：上下 左右 */
+    background-color: var(--primary-color); /* 背景颜色 */
+    color: white;                    /* 文本颜色 */
+    border: none;                    /* 无边框 */
+    border-radius: var(--border-radius); /* 圆角 */
+    cursor: pointer;                 /* 鼠标样式：指针 */
+    font-size: 1em;                  /* 字体大小 */
+    transition: background-color var(--transition-speed); /* 过渡：背景颜色 */
+}
+
+button:hover {
+    /* 伪类：鼠标悬停 */
+    background-color: #2980b9;       /* 背景颜色变化（更深） */
+}
+
+button:active {
+    /* 伪类：激活状态 */
+    transform: scale(0.95);          /* 变换：缩放（按下效果） */
+}
+
+/* ========== 20. 响应式设计（媒体查询） ========== */
+@media screen and (max-width: 768px) {
+    /* 媒体查询：屏幕宽度小于等于768px时 */
+    body {
+        font-size: 14px;             /* 字体大小调整 */
+        padding: calc(var(--spacing-unit) / 2); /* 内边距调整 */
+    }
+    
+    h1 {
+        font-size: 2em;              /* 标题字体大小调整 */
+    }
+    
+    .flex-container {
+        flex-direction: column;      /* Flex方向改为列（垂直） */
+    }
+    
+    .grid-container {
+        grid-template-columns: 1fr;   /* Grid列数改为1列 */
+    }
+    
+    .box-model {
+        width: 100%;                 /* 宽度改为100% */
+        max-width: 100%;             /* 最大宽度100% */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* 媒体查询：屏幕宽度小于等于480px时（手机） */
+    h1 {
+        font-size: 1.5em;            /* 标题字体大小进一步调整 */
+    }
+    
+    h2 {
+        font-size: 1.3em;            /* 二级标题字体大小调整 */
+    }
+    
+    .section {
+        padding: calc(var(--spacing-unit) / 2); /* 内边距调整 */
+    }
+}
+
+@media print {
+    /* 媒体查询：打印时 */
+    body {
+        background-color: white;     /* 背景颜色：白色 */
+        color: black;                /* 文本颜色：黑色 */
+    }
+    
+    .no-print {
+        display: none;               /* 隐藏class="no-print"的元素 */
+    }
+}
+
+/* ========== 21. 浮动（Float） ========== */
+.float-left {
+    /* 选择class="float-left"的元素 */
+    float: left;                     /* 浮动：左浮动 */
+    margin-right: var(--spacing-unit); /* 右边距 */
+    margin-bottom: var(--spacing-unit); /* 下外边距 */
+}
+
+.float-right {
+    /* 选择class="float-right"的元素 */
+    float: right;                    /* 浮动：右浮动 */
+    margin-left: var(--spacing-unit); /* 左边距 */
+    margin-bottom: var(--spacing-unit); /* 下外边距 */
+}
+
+.clearfix::after {
+    /* 伪元素：清除浮动 */
+    content: "";                     /* 内容为空 */
+    display: table;                  /* 显示类型：表格 */
+    clear: both;                     /* 清除浮动：清除左右浮动 */
+}
+
+/* ========== 22. 显示和可见性 ========== */
+.display-none {
+    /* 选择class="display-none"的元素 */
+    display: none;                   /* 显示：无（完全隐藏，不占空间） */
+}
+
+.display-block {
+    /* 选择class="display-block"的元素 */
+    display: block;                  /* 显示：块级元素 */
+}
+
+.display-inline {
+    /* 选择class="display-inline"的元素 */
+    display: inline;                 /* 显示：行内元素 */
+}
+
+.display-inline-block {
+    /* 选择class="display-inline-block"的元素 */
+    display: inline-block;           /* 显示：行内块元素（可设置宽高，但在一行显示） */
+}
+
+.visibility-hidden {
+    /* 选择class="visibility-hidden"的元素 */
+    visibility: hidden;              /* 可见性：隐藏（占空间但不显示） */
+}
+
+.opacity {
+    /* 选择class="opacity"的元素 */
+    opacity: 0.5;                    /* 透明度：0.5（50%透明） */
+}
+
+/* ========== 23. 溢出处理 ========== */
+.overflow-hidden {
+    /* 选择class="overflow-hidden"的元素 */
+    overflow: hidden;               /* 溢出：隐藏 */
+}
+
+.overflow-scroll {
+    /* 选择class="overflow-scroll"的元素 */
+    overflow: scroll;                /* 溢出：滚动条 */
+}
+
+.overflow-auto {
+    /* 选择class="overflow-auto"的元素 */
+    overflow: auto;                  /* 溢出：自动（需要时显示滚动条） */
+}
+
+.overflow-x-hidden {
+    /* 选择class="overflow-x-hidden"的元素 */
+    overflow-x: hidden;              /* 水平溢出：隐藏 */
+}
+
+.overflow-y-scroll {
+    /* 选择class="overflow-y-scroll"的元素 */
+    overflow-y: scroll;              /* 垂直溢出：滚动条 */
+}
+
+/* ========== 24. 文本溢出处理 ========== */
+.text-ellipsis {
+    /* 选择class="text-ellipsis"的元素 */
+    white-space: nowrap;             /* 空白处理：不换行 */
+    overflow: hidden;                /* 溢出：隐藏 */
+    text-overflow: ellipsis;         /* 文本溢出：省略号 */
+}
+
+.text-clip {
+    /* 选择class="text-clip"的元素 */
+    white-space: nowrap;             /* 空白处理：不换行 */
+    overflow: hidden;                /* 溢出：隐藏 */
+    text-overflow: clip;             /* 文本溢出：裁剪 */
+}
+
+/* ========== 25. 多列布局 ========== */
+.multi-column {
+    /* 选择class="multi-column"的元素 */
+    column-count: 3;                 /* 列数：3列 */
+    column-gap: var(--spacing-unit); /* 列间距 */
+    column-rule: 1px solid #ddd;    /* 列分隔线：宽度 样式 颜色 */
+}
+
+/* ========== 26. 滤镜效果 ========== */
+.filter-blur {
+    /* 选择class="filter-blur"的元素 */
+    filter: blur(5px);               /* 滤镜：模糊（5px） */
+}
+
+.filter-brightness {
+    /* 选择class="filter-brightness"的元素 */
+    filter: brightness(1.2);         /* 滤镜：亮度（1.2倍） */
+}
+
+.filter-contrast {
+    /* 选择class="filter-contrast"的元素 */
+    filter: contrast(1.5);           /* 滤镜：对比度（1.5倍） */
+}
+
+.filter-grayscale {
+    /* 选择class="filter-grayscale"的元素 */
+    filter: grayscale(100%);         /* 滤镜：灰度（100%） */
+}
+
+/* ========== 27. 对象适配 ========== */
+.object-fit-cover {
+    /* 选择class="object-fit-cover"的元素 */
+    object-fit: cover;               /* 对象适配：覆盖（保持比例，裁剪多余部分） */
+    width: 100%;                     /* 宽度 */
+    height: 200px;                   /* 高度 */
+}
+
+.object-fit-contain {
+    /* 选择class="object-fit-contain"的元素 */
+    object-fit: contain;             /* 对象适配：包含（保持比例，完整显示） */
+    width: 100%;                     /* 宽度 */
+    height: 200px;                   /* 高度 */
+}
+
+/* ========== 28. 选择器优先级示例 ========== */
+/* ID选择器优先级最高 */
+#unique-element {
+    color: red;                      /* 颜色：红色 */
+}
+
+/* 类选择器优先级中等 */
+.class-element {
+    color: blue;                     /* 颜色：蓝色 */
+}
+
+/* 元素选择器优先级最低 */
+div {
+    color: green;                    /* 颜色：绿色 */
+}
+
+/* 组合选择器：后代选择器 */
+.parent .child {
+    color: purple;                   /* 选择parent类下的child类元素 */
+}
+
+/* 组合选择器：子元素选择器 */
+.parent > .direct-child {
+    color: orange;                   /* 选择parent类的直接子元素child类 */
+}
+
+/* 组合选择器：相邻兄弟选择器 */
+.element + .sibling {
+    color: pink;                     /* 选择element类后紧邻的sibling类元素 */
+}
+
+/* 组合选择器：通用兄弟选择器 */
+.element ~ .sibling {
+    color: cyan;                     /* 选择element类后所有的sibling类元素 */
+}
+
+/* 属性选择器 */
+input[type="text"] {
+    border: 1px solid #ccc;          /* 选择type属性为text的input元素 */
+}
+
+input[class*="search"] {
+    background-color: #f0f0f0;       /* 选择class属性包含"search"的input元素 */
+}
+
+/* ========== 29. 层叠上下文（Z-index） ========== */
+.layer-1 {
+    position: relative;              /* 相对定位 */
+    z-index: 1;                      /* 层叠顺序：1 */
+}
+
+.layer-2 {
+    position: relative;              /* 相对定位 */
+    z-index: 2;                      /* 层叠顺序：2（在上层） */
+}
+
+.layer-3 {
+    position: relative;              /* 相对定位 */
+    z-index: 3;                      /* 层叠顺序：3（在最上层） */
+}
+
+/* ========== 30. 自定义滚动条 ========== */
+.custom-scrollbar::-webkit-scrollbar {
+    /* 伪元素：滚动条 */
+    width: 10px;                     /* 滚动条宽度 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    /* 伪元素：滚动条轨道 */
+    background: #f1f1f1;             /* 背景颜色 */
+    border-radius: 5px;              /* 圆角 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    /* 伪元素：滚动条滑块 */
+    background: var(--primary-color); /* 背景颜色 */
+    border-radius: 5px;              /* 圆角 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    /* 伪类：滚动条滑块悬停 */
+    background: #2980b9;             /* 背景颜色变化 */
+}
+
+

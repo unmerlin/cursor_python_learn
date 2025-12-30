@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<!-- HTML5文档类型声明：相比HTML4的复杂DTD声明，HTML5只需要简单的<!DOCTYPE html> -->
+<html lang="zh-CN">
+<!-- lang属性：HTML5推荐使用，用于指定页面语言，有助于搜索引擎和屏幕阅读器 -->
+
+<head>
+    <!-- HTML5的head标签：与HTML4相同，但HTML5对字符编码的声明更简洁 -->
+    <meta charset="UTF-8">
+    <!-- charset属性：HTML5简化了字符编码声明，不再需要http-equiv -->
+    
+    <!-- HTML5新增：viewport元标签，用于移动端响应式设计 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>HTML5学习指南 - HTML5新特性详解</title>
+    
+    <style>
+        /* CSS样式：用于美化页面展示 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            background-color: #333;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: #555;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        code {
+            background-color: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .demo-box {
+            border: 2px dashed #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        
+        form {
+            margin: 1rem 0;
+        }
+        
+        label {
+            display: block;
+            margin: 0.5rem 0;
+            font-weight: bold;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        
+        button:hover {
+            background-color: #5568d3;
+        }
+        
+        canvas {
+            border: 2px solid #667eea;
+            display: block;
+            margin: 1rem auto;
+            background-color: white;
+        }
+        
+        video, audio {
+            width: 100%;
+            max-width: 600px;
+            display: block;
+            margin: 1rem auto;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .draggable {
+            width: 100px;
+            height: 100px;
+            background-color: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: move;
+            margin: 1rem;
+            border-radius: 5px;
+        }
+        
+        .dropzone {
+            width: 300px;
+            height: 200px;
+            border: 3px dashed #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .dropzone.drag-over {
+            background-color: #e7f3ff;
+            border-color: #2196F3;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HTML5语义化标签：header - 页面或区块的页眉，替代HTML4中通用的div -->
+    <header>
+        <h1>HTML5学习指南</h1>
+        <p>全面了解HTML5新特性及其与HTML4的区别</p>
+    </header>
+    
+    <!-- HTML5语义化标签：nav - 导航链接区域，替代HTML4中的div id="nav" -->
+    <nav>
+        <ul>
+            <li><a href="#semantic">语义化标签</a></li>
+            <li><a href="#forms">表单新特性</a></li>
+            <li><a href="#media">媒体元素</a></li>
+            <li><a href="#canvas">Canvas绘图</a></li>
+            <li><a href="#storage">本地存储</a></li>
+            <li><a href="#dragdrop">拖放API</a></li>
+            <li><a href="#geolocation">地理位置</a></li>
+            <li><a href="#webworkers">Web Workers</a></li>
+            <li><a href="#attributes">新属性</a></li>
+        </ul>
+    </nav>
+    
+    <!-- HTML5语义化标签：main - 页面主要内容区域，替代HTML4中的div id="main" -->
+    <main>
+        <!-- HTML5语义化标签：section - 文档中的独立区块，替代HTML4中的div class="section" -->
+        <section id="semantic">
+            <h2>一、HTML5语义化标签</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4主要使用div和span等通用容器，需要配合id和class来标识含义。
+                HTML5引入了语义化标签，使代码更具可读性和可维护性，同时有助于SEO和可访问性。
+            </div>
+            
+            <h3>1.1 主要语义化标签说明</h3>
+            
+            <pre><code>&lt;!-- header: 页面或区块的页眉，通常包含标题、logo、导航等 --&gt;
+&lt;header&gt;...&lt;/header&gt;
+
+&lt;!-- nav: 导航链接区域，用于主要导航菜单 --&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+
+&lt;!-- main: 页面主要内容区域，每个页面应该只有一个main标签 --&gt;
+&lt;main&gt;...&lt;/main&gt;
+
+&lt;!-- article: 独立的文章内容，如博客文章、新闻条目等 --&gt;
+&lt;article&gt;...&lt;/article&gt;
+
+&lt;!-- section: 文档中的独立区块，用于组织相关内容 --&gt;
+&lt;section&gt;...&lt;/section&gt;
+
+&lt;!-- aside: 侧边栏内容，通常包含补充信息、广告等 --&gt;
+&lt;aside&gt;...&lt;/aside&gt;
+
+&lt;!-- footer: 页面或区块的页脚，通常包含版权信息、联系方式等 --&gt;
+&lt;footer&gt;...&lt;/footer&gt;
+
+&lt;!-- figure: 用于包含图片、图表、代码等独立内容 --&gt;
+&lt;figure&gt;
+    &lt;img src="image.jpg" alt="描述"&gt;
+    &lt;figcaption&gt;图片说明文字&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- mark: 高亮显示文本，用于标记重要内容 --&gt;
+&lt;p&gt;这是一段&lt;mark&gt;重要&lt;/mark&gt;的文字&lt;/p&gt;
+
+&lt;!-- time: 用于标记时间日期，便于机器识别 --&gt;
+&lt;time datetime="2024-01-01"&gt;2024年1月1日&lt;/time&gt;
+
+&lt;!-- progress: 进度条，显示任务完成进度 --&gt;
+&lt;progress value="70" max="100"&gt;70%&lt;/progress&gt;
+
+&lt;!-- meter: 度量值显示，如温度、评分等 --&gt;
+&lt;meter value="0.6" min="0" max="1"&gt;60%&lt;/meter&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>示例演示：</h4>
+                <p>当前时间：<time datetime="2024-01-01">2024年1月1日</time></p>
+                <p>任务进度：<progress value="75" max="100">75%</progress></p>
+                <p>评分：<meter value="0.85" min="0" max="1">85%</meter></p>
+                <p>这是一段包含<mark>高亮标记</mark>的文字</p>
+            </div>
+        </section>
+        
+        <section id="forms">
+            <h2>二、HTML5表单新特性</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4的表单输入类型有限（text, password, checkbox, radio等），需要JavaScript进行验证。
+                HTML5新增了多种输入类型和属性，浏览器原生支持验证，减少了JavaScript代码。
+            </div>
+            
+            <h3>2.1 新的输入类型</h3>
+            
+            <form>
+                <!-- email类型：自动验证邮箱格式，移动端会显示邮箱键盘 -->
+                <label for="email">邮箱地址（email类型）：</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                <small>HTML4使用type="text"，需要JavaScript验证；HTML5浏览器自动验证</small>
+                
+                <!-- url类型：自动验证URL格式 -->
+                <label for="url">网址（url类型）：</label>
+                <input type="url" id="url" name="url" placeholder="https://example.com">
+                
+                <!-- number类型：数字输入，可设置min、max、step -->
+                <label for="number">数字（number类型）：</label>
+                <input type="number" id="number" name="number" min="0" max="100" step="1" value="50">
+                <small>HTML4使用type="text"，需要JavaScript验证数字范围</small>
+                
+                <!-- range类型：滑块控件 -->
+                <label for="range">范围滑块（range类型）：</label>
+                <input type="range" id="range" name="range" min="0" max="100" value="50">
+                <output for="range" id="range-output">50</output>
+                <small>HTML4需要使用JavaScript创建滑块</small>
+                
+                <!-- date类型：日期选择器 -->
+                <label for="date">日期（date类型）：</label>
+                <input type="date" id="date" name="date">
+                <small>HTML4使用type="text"，需要JavaScript日期选择器插件</small>
+                
+                <!-- time类型：时间选择器 -->
+                <label for="time">时间（time类型）：</label>
+                <input type="time" id="time" name="time">
+                
+                <!-- datetime-local类型：日期时间选择器 -->
+                <label for="datetime">日期时间（datetime-local类型）：</label>
+                <input type="datetime-local" id="datetime" name="datetime">
+                
+                <!-- month类型：月份选择器 -->
+                <label for="month">月份（month类型）：</label>
+                <input type="month" id="month" name="month">
+                
+                <!-- week类型：周选择器 -->
+                <label for="week">周（week类型）：</label>
+                <input type="week" id="week" name="week">
+                
+                <!-- color类型：颜色选择器 -->
+                <label for="color">颜色（color类型）：</label>
+                <input type="color" id="color" name="color" value="#667eea">
+                <small>HTML4需要使用JavaScript颜色选择器插件</small>
+                
+                <!-- search类型：搜索框，某些浏览器会显示搜索图标 -->
+                <label for="search">搜索（search类型）：</label>
+                <input type="search" id="search" name="search" placeholder="输入搜索关键词">
+                
+                <!-- tel类型：电话号码，移动端会显示数字键盘 -->
+                <label for="tel">电话（tel类型）：</label>
+                <input type="tel" id="tel" name="tel" placeholder="13800138000">
+                
+                <!-- file类型增强：可多选和指定文件类型 -->
+                <label for="file">文件上传（支持多选和类型限制）：</label>
+                <input type="file" id="file" name="file" multiple accept="image/*,.pdf">
+                <small>HTML4的file类型不支持multiple和accept属性</small>
+            </form>
+            
+            <h3>2.2 新的表单属性</h3>
+            
+            <form>
+                <!-- required属性：必填字段，浏览器自动验证 -->
+                <label for="required">必填字段（required属性）：</label>
+                <input type="text" id="required" name="required" required>
+                <small>HTML4需要JavaScript验证；HTML5浏览器原生支持</small>
+                
+                <!-- placeholder属性：占位符提示文字 -->
+                <label for="placeholder">占位符（placeholder属性）：</label>
+                <input type="text" id="placeholder" name="placeholder" placeholder="请输入内容">
+                <small>HTML4需要使用value属性模拟，但会干扰用户输入</small>
+                
+                <!-- autofocus属性：页面加载时自动聚焦 -->
+                <label for="autofocus">自动聚焦（autofocus属性）：</label>
+                <input type="text" id="autofocus" name="autofocus" autofocus>
+                <small>HTML4需要JavaScript实现：document.getElementById('input').focus()</small>
+                
+                <!-- autocomplete属性：自动完成功能 -->
+                <label for="autocomplete">自动完成（autocomplete属性）：</label>
+                <input type="text" id="autocomplete" name="autocomplete" autocomplete="on">
+                
+                <!-- pattern属性：正则表达式验证 -->
+                <label for="pattern">模式验证（pattern属性，只允许数字）：</label>
+                <input type="text" id="pattern" name="pattern" pattern="[0-9]+" title="只允许输入数字">
+                <small>HTML4需要JavaScript正则验证；HTML5浏览器原生支持</small>
+                
+                <!-- min、max、step属性：数值范围限制 -->
+                <label for="minmax">数值范围（min/max/step属性）：</label>
+                <input type="number" id="minmax" name="minmax" min="10" max="100" step="5" value="50">
+                
+                <!-- list和datalist：输入建议列表 -->
+                <label for="datalist">输入建议（datalist元素）：</label>
+                <input type="text" id="datalist" name="datalist" list="suggestions">
+                <datalist id="suggestions">
+                    <!-- datalist：提供输入建议选项，HTML4不支持 -->
+                    <option value="北京">
+                    <option value="上海">
+                    <option value="广州">
+                    <option value="深圳">
+                </datalist>
+                <small>HTML4需要使用JavaScript实现自动完成功能</small>
+                
+                <!-- novalidate属性：禁用表单验证 -->
+                <button type="submit">提交表单</button>
+                <button type="submit" formnovalidate>不验证提交</button>
+            </form>
+            
+            <h3>2.3 表单验证API</h3>
+            <pre><code>&lt;!-- HTML5提供了原生表单验证API --&gt;
+&lt;form id="myForm"&gt;
+    &lt;input type="email" id="email" required&gt;
+    &lt;button type="submit"&gt;提交&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+// checkValidity()：检查表单是否有效
+if (document.getElementById('myForm').checkValidity()) {
+    // 表单有效
+}
+
+// validity对象：包含详细的验证状态
+var email = document.getElementById('email');
+if (email.validity.valid) {
+    // 输入有效
+} else if (email.validity.valueMissing) {
+    // 值缺失
+} else if (email.validity.typeMismatch) {
+    // 类型不匹配
+}
+
+// setCustomValidity()：设置自定义验证消息
+email.setCustomValidity('请输入有效的邮箱地址');
+&lt;/script&gt;</code></pre>
+        </section>
+        
+        <section id="media">
+            <h2>三、HTML5媒体元素</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4需要使用Flash、QuickTime等插件来播放音视频，需要用户安装插件。
+                HTML5的audio和video标签提供原生音视频支持，无需插件，更好的性能和兼容性。
+            </div>
+            
+            <h3>3.1 video标签 - 视频播放</h3>
+            
+            <pre><code>&lt;!-- video：HTML5新增的视频标签，替代HTML4的object/embed标签 --&gt;
+&lt;video controls width="600" height="400" poster="poster.jpg"&gt;
+    &lt;!-- source：提供多个视频源，浏览器会选择支持的格式 --&gt;
+    &lt;source src="video.mp4" type="video/mp4"&gt;
+    &lt;source src="video.webm" type="video/webm"&gt;
+    &lt;source src="video.ogv" type="video/ogg"&gt;
+    &lt;!-- 不支持video标签时显示的提示文字 --&gt;
+    您的浏览器不支持HTML5视频标签
+&lt;/video&gt;
+
+&lt;!-- video常用属性说明：
+     controls：显示播放控件
+     autoplay：自动播放（注意：现代浏览器通常阻止自动播放）
+     loop：循环播放
+     muted：静音
+     preload：预加载（none/metadata/auto）
+     poster：视频封面图片
+     width/height：视频尺寸
+--&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>视频播放示例：</h4>
+                <video controls width="100%" style="max-width: 600px;">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签
+                </video>
+                <p><small>注意：由于示例视频可能无法加载，这里仅展示标签结构</small></p>
+            </div>
+            
+            <h3>3.2 audio标签 - 音频播放</h3>
+            
+            <pre><code>&lt;!-- audio：HTML5新增的音频标签，替代HTML4的object/embed标签 --&gt;
+&lt;audio controls&gt;
+    &lt;!-- source：提供多个音频源 --&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio.ogg" type="audio/ogg"&gt;
+    &lt;source src="audio.wav" type="audio/wav"&gt;
+    您的浏览器不支持HTML5音频标签
+&lt;/audio&gt;
+
+&lt;!-- audio常用属性说明：
+     controls：显示播放控件
+     autoplay：自动播放
+     loop：循环播放
+     muted：静音
+     preload：预加载
+--&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>音频播放示例：</h4>
+                <audio controls>
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                    您的浏览器不支持HTML5音频标签
+                </audio>
+                <p><small>注意：由于示例音频可能无法加载，这里仅展示标签结构</small></p>
+            </div>
+            
+            <h3>3.3 媒体API</h3>
+            <pre><code>&lt;script&gt;
+// HTML5提供了丰富的媒体API，可以控制播放、暂停、音量等
+var video = document.querySelector('video');
+
+// 播放控制
+video.play();      // 播放
+video.pause();     // 暂停
+video.load();      // 重新加载
+
+// 属性访问
+video.currentTime;  // 当前播放时间
+video.duration;     // 视频总时长
+video.volume;       // 音量（0-1）
+video.muted;        // 是否静音
+video.paused;       // 是否暂停
+video.ended;        // 是否播放结束
+
+// 事件监听
+video.addEventListener('play', function() {
+    console.log('视频开始播放');
+});
+
+video.addEventListener('timeupdate', function() {
+    console.log('播放时间更新：' + video.currentTime);
+});
+&lt;/script&gt;</code></pre>
+        </section>
+        
+        <section id="canvas">
+            <h2>四、HTML5 Canvas绘图</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4需要使用Flash、SVG或服务器端生成图片来实现图形绘制。
+                HTML5的Canvas提供原生2D绘图能力，可以通过JavaScript动态绘制图形、动画等。
+            </div>
+            
+            <h3>4.1 Canvas基本用法</h3>
+            
+            <pre><code>&lt;!-- canvas：HTML5新增的画布元素，用于绘制图形 --&gt;
+&lt;canvas id="myCanvas" width="400" height="300"&gt;
+    您的浏览器不支持Canvas
+&lt;/canvas&gt;
+
+&lt;script&gt;
+// 获取canvas元素和2D绘图上下文
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');  // '2d'表示2D绘图上下文
+
+// 绘制矩形
+ctx.fillStyle = '#667eea';  // 设置填充颜色
+ctx.fillRect(50, 50, 100, 100);  // 填充矩形 (x, y, width, height)
+
+ctx.strokeStyle = '#764ba2';  // 设置描边颜色
+ctx.strokeRect(200, 50, 100, 100);  // 描边矩形
+
+// 绘制圆形
+ctx.beginPath();
+ctx.arc(150, 200, 50, 0, 2 * Math.PI);  // arc(x, y, radius, startAngle, endAngle)
+ctx.fillStyle = '#ff6b6b';
+ctx.fill();
+
+// 绘制线条
+ctx.beginPath();
+ctx.moveTo(250, 150);  // 起点
+ctx.lineTo(350, 250);  // 终点
+ctx.strokeStyle = '#4ecdc4';
+ctx.lineWidth = 3;
+ctx.stroke();
+
+// 绘制文本
+ctx.font = '30px Arial';
+ctx.fillStyle = '#333';
+ctx.fillText('Hello Canvas', 50, 280);
+&lt;/script&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>Canvas绘图示例：</h4>
+                <canvas id="demoCanvas" width="400" height="300"></canvas>
+            </div>
+            
+            <h3>4.2 Canvas高级功能</h3>
+            <pre><code>&lt;script&gt;
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');
+
+// 渐变填充
+var gradient = ctx.createLinearGradient(0, 0, 200, 0);
+gradient.addColorStop(0, '#667eea');
+gradient.addColorStop(1, '#764ba2');
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 200, 100);
+
+// 径向渐变
+var radialGradient = ctx.createRadialGradient(100, 100, 10, 100, 100, 50);
+radialGradient.addColorStop(0, '#ff6b6b');
+radialGradient.addColorStop(1, '#4ecdc4');
+ctx.fillStyle = radialGradient;
+ctx.fillRect(50, 50, 100, 100);
+
+// 图片绘制
+var img = new Image();
+img.onload = function() {
+    ctx.drawImage(img, 0, 0);  // 绘制图片
+    // ctx.drawImage(img, x, y, width, height);  // 缩放绘制
+};
+img.src = 'image.jpg';
+
+// 图像操作
+var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+// 修改像素数据
+for (var i = 0; i < imageData.data.length; i += 4) {
+    imageData.data[i] = 255 - imageData.data[i];     // 红色通道取反
+    imageData.data[i + 1] = 255 - imageData.data[i + 1]; // 绿色通道取反
+    imageData.data[i + 2] = 255 - imageData.data[i + 2]; // 蓝色通道取反
+    // imageData.data[i + 3] 是alpha通道
+}
+ctx.putImageData(imageData, 0, 0);
+
+// 保存Canvas为图片
+canvas.toDataURL('image/png');  // 返回base64编码的图片数据
+&lt;/script&gt;</code></pre>
+        </section>
+        
+        <section id="storage">
+            <h2>五、HTML5本地存储</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4只能使用Cookie存储少量数据（4KB），且每次HTTP请求都会发送Cookie。
+                HTML5提供了localStorage和sessionStorage，存储容量更大（通常5-10MB），且不会随HTTP请求发送。
+            </div>
+            
+            <h3>5.1 localStorage - 本地持久化存储</h3>
+            
+            <pre><code>&lt;script&gt;
+// localStorage：数据永久存储在浏览器中，除非手动清除
+
+// 存储数据（键值对形式，值必须是字符串）
+localStorage.setItem('username', '张三');
+localStorage.setItem('age', '25');
+
+// 读取数据
+var username = localStorage.getItem('username');
+var age = localStorage.getItem('age');
+
+// 删除指定数据
+localStorage.removeItem('username');
+
+// 清空所有数据
+localStorage.clear();
+
+// 获取存储的数据数量
+var length = localStorage.length;
+
+// 通过索引获取键名
+var key = localStorage.key(0);
+
+// 存储对象（需要JSON序列化）
+var user = {name: '李四', age: 30};
+localStorage.setItem('user', JSON.stringify(user));
+var userObj = JSON.parse(localStorage.getItem('user'));
+
+// storage事件：监听其他窗口的localStorage变化
+window.addEventListener('storage', function(e) {
+    console.log('键名：' + e.key);
+    console.log('旧值：' + e.oldValue);
+    console.log('新值：' + e.newValue);
+    console.log('存储位置：' + e.url);
+});
+&lt;/script&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>localStorage演示：</h4>
+                <input type="text" id="storage-input" placeholder="输入要存储的内容">
+                <button onclick="saveToLocalStorage()">保存到localStorage</button>
+                <button onclick="readFromLocalStorage()">读取localStorage</button>
+                <button onclick="clearLocalStorage()">清空localStorage</button>
+                <p id="storage-output"></p>
+            </div>
+            
+            <h3>5.2 sessionStorage - 会话存储</h3>
+            
+            <pre><code>&lt;script&gt;
+// sessionStorage：数据只在当前会话（标签页）有效，关闭标签页后自动清除
+// 使用方法与localStorage完全相同，只是数据生命周期不同
+
+sessionStorage.setItem('sessionData', '这是会话数据');
+var data = sessionStorage.getItem('sessionData');
+
+// sessionStorage的特点：
+// 1. 数据只在当前标签页有效
+// 2. 打开新标签页会创建新的sessionStorage
+// 3. 关闭标签页后数据自动清除
+// 4. 刷新页面数据不会丢失
+&lt;/script&gt;</code></pre>
+            
+            <h3>5.3 IndexedDB - 客户端数据库</h3>
+            <pre><code>&lt;script&gt;
+// IndexedDB：HTML5提供的客户端数据库，可以存储大量结构化数据
+// 相比localStorage，IndexedDB支持更复杂的数据结构和查询
+
+var request = indexedDB.open('myDatabase', 1);
+
+request.onerror = function(event) {
+    console.log('数据库打开失败');
+};
+
+request.onsuccess = function(event) {
+    var db = event.target.result;
+    console.log('数据库打开成功');
+    
+    // 创建事务
+    var transaction = db.transaction(['users'], 'readwrite');
+    var objectStore = transaction.objectStore('users');
+    
+    // 添加数据
+    var user = {id: 1, name: '王五', email: 'wangwu@example.com'};
+    var addRequest = objectStore.add(user);
+    
+    // 读取数据
+    var getRequest = objectStore.get(1);
+    getRequest.onsuccess = function(event) {
+        console.log('读取数据：', event.target.result);
+    };
+};
+
+request.onupgradeneeded = function(event) {
+    var db = event.target.result;
+    // 创建对象存储（类似表）
+    var objectStore = db.createObjectStore('users', {keyPath: 'id'});
+    // 创建索引
+    objectStore.createIndex('name', 'name', {unique: false});
+    objectStore.createIndex('email', 'email', {unique: true});
+};
+&lt;/script&gt;</code></pre>
+        </section>
+        
+        <section id="dragdrop">
+            <h2>六、HTML5拖放API</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4要实现拖放功能需要使用复杂的JavaScript和鼠标事件模拟。
+                HTML5提供了原生拖放API，简化了拖放功能的实现。
+            </div>
+            
+            <h3>6.1 拖放基本实现</h3>
+            
+            <pre><code>&lt;!-- draggable属性：设置为true使元素可拖拽 --&gt;
+&lt;div id="dragElement" draggable="true"&gt;拖拽我&lt;/div&gt;
+
+&lt;!-- 放置区域 --&gt;
+&lt;div id="dropZone"&gt;放置到这里&lt;/div&gt;
+
+&lt;script&gt;
+var dragElement = document.getElementById('dragElement');
+var dropZone = document.getElementById('dropZone');
+
+// 拖拽开始事件
+dragElement.addEventListener('dragstart', function(e) {
+    // dataTransfer：用于在拖放过程中传递数据
+    e.dataTransfer.setData('text/plain', '这是拖拽的数据');
+    e.dataTransfer.effectAllowed = 'move';  // 设置拖拽效果（move/copy/link）
+});
+
+// 拖拽结束事件
+dragElement.addEventListener('dragend', function(e) {
+    console.log('拖拽结束');
+});
+
+// 阻止默认行为，允许放置
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault();  // 必须阻止默认行为才能放置
+    e.dataTransfer.dropEffect = 'move';  // 设置放置效果
+});
+
+// 进入放置区域
+dropZone.addEventListener('dragenter', function(e) {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+});
+
+// 离开放置区域
+dropZone.addEventListener('dragleave', function(e) {
+    dropZone.classList.remove('drag-over');
+});
+
+// 放置事件
+dropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    var data = e.dataTransfer.getData('text/plain');
+    console.log('放置的数据：', data);
+    dropZone.textContent = '已放置：' + data;
+    dropZone.classList.remove('drag-over');
+});
+&lt;/script&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>拖放演示：</h4>
+                <div class="draggable" id="drag1" draggable="true">拖拽元素1</div>
+                <div class="draggable" id="drag2" draggable="true">拖拽元素2</div>
+                <div class="dropzone" id="dropZone">放置区域</div>
+            </div>
+            
+            <h3>6.2 文件拖放上传</h3>
+            <pre><code>&lt;div id="fileDropZone"&gt;拖拽文件到这里&lt;/div&gt;
+
+&lt;script&gt;
+var fileDropZone = document.getElementById('fileDropZone');
+
+fileDropZone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    fileDropZone.classList.add('drag-over');
+});
+
+fileDropZone.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    fileDropZone.classList.remove('drag-over');
+});
+
+fileDropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    fileDropZone.classList.remove('drag-over');
+    
+    // files：获取拖放的文件列表
+    var files = e.dataTransfer.files;
+    
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        console.log('文件名：', file.name);
+        console.log('文件大小：', file.size);
+        console.log('文件类型：', file.type);
+        
+        // 使用FileReader读取文件内容
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            console.log('文件内容：', e.target.result);
+        };
+        reader.readAsText(file);
+    }
+});
+&lt;/script&gt;</code></pre>
+        </section>
+        
+        <section id="geolocation">
+            <h2>七、HTML5地理位置API</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4无法获取用户地理位置，需要依赖第三方服务或插件。
+                HTML5提供了Geolocation API，可以原生获取用户的地理位置信息。
+            </div>
+            
+            <h3>7.1 获取地理位置</h3>
+            
+            <pre><code>&lt;script&gt;
+// navigator.geolocation：地理位置API对象
+
+// 获取当前位置（一次性）
+navigator.geolocation.getCurrentPosition(
+    function(position) {
+        // 成功回调
+        var latitude = position.coords.latitude;   // 纬度
+        var longitude = position.coords.longitude; // 经度
+        var accuracy = position.coords.accuracy;   // 精度（米）
+        var altitude = position.coords.altitude;   // 海拔（米）
+        var speed = position.coords.speed;         // 速度（米/秒）
+        var heading = position.coords.heading;     // 方向（度）
+        
+        console.log('纬度：', latitude);
+        console.log('经度：', longitude);
+        console.log('精度：', accuracy);
+        
+        // timestamp：获取位置的时间戳
+        var timestamp = position.timestamp;
+    },
+    function(error) {
+        // 错误回调
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                console.log('用户拒绝了地理位置请求');
+                break;
+            case error.POSITION_UNAVAILABLE:
+                console.log('位置信息不可用');
+                break;
+            case error.TIMEOUT:
+                console.log('请求超时');
+                break;
+        }
+    },
+    {
+        // 选项参数
+        enableHighAccuracy: true,  // 是否启用高精度
+        timeout: 5000,              // 超时时间（毫秒）
+        maximumAge: 60000           // 缓存位置的最大时间（毫秒）
+    }
+);
+
+// 持续监听位置变化
+var watchId = navigator.geolocation.watchPosition(
+    function(position) {
+        console.log('位置更新：', position.coords.latitude, position.coords.longitude);
+    },
+    function(error) {
+        console.log('错误：', error);
+    }
+);
+
+// 停止监听
+navigator.geolocation.clearWatch(watchId);
+&lt;/script&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>地理位置演示：</h4>
+                <button onclick="getLocation()">获取当前位置</button>
+                <button onclick="watchLocation()">持续监听位置</button>
+                <button onclick="stopWatch()">停止监听</button>
+                <p id="location-output"></p>
+            </div>
+        </section>
+        
+        <section id="webworkers">
+            <h2>八、HTML5 Web Workers</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML4的JavaScript是单线程的，执行耗时任务会阻塞页面。
+                HTML5的Web Workers允许在后台线程执行JavaScript，不会阻塞主线程。
+            </div>
+            
+            <h3>8.1 Web Worker基本用法</h3>
+            
+            <pre><code>&lt;!-- 主线程代码 --&gt;
+&lt;script&gt;
+// 创建Worker（worker.js是工作线程的脚本文件）
+var worker = new Worker('worker.js');
+
+// 向Worker发送消息
+worker.postMessage('开始计算');
+
+// 接收Worker的消息
+worker.onmessage = function(e) {
+    console.log('Worker返回结果：', e.data);
+};
+
+// 监听Worker错误
+worker.onerror = function(e) {
+    console.log('Worker错误：', e.message);
+};
+
+// 终止Worker
+worker.terminate();
+&lt;/script&gt;
+
+&lt;!-- worker.js（工作线程脚本） --&gt;
+&lt;script&gt;
+// 在工作线程中，不能访问DOM、window、document等对象
+// 但可以使用Web APIs，如XMLHttpRequest、setTimeout等
+
+// 接收主线程消息
+self.onmessage = function(e) {
+    console.log('收到主线程消息：', e.data);
+    
+    // 执行耗时任务
+    var result = 0;
+    for (var i = 0; i < 1000000000; i++) {
+        result += i;
+    }
+    
+    // 向主线程发送结果
+    self.postMessage(result);
+};
+
+// 也可以使用addEventListener
+self.addEventListener('message', function(e) {
+    // 处理消息
+});
+&lt;/script&gt;</code></pre>
+            
+            <h3>8.2 SharedWorker - 共享Worker</h3>
+            <pre><code>&lt;script&gt;
+// SharedWorker：可以被多个页面共享的Worker
+var sharedWorker = new SharedWorker('shared-worker.js');
+
+// 通过port访问SharedWorker
+sharedWorker.port.postMessage('消息');
+sharedWorker.port.onmessage = function(e) {
+    console.log('收到消息：', e.data);
+};
+
+// 启动端口连接
+sharedWorker.port.start();
+&lt;/script&gt;</code></pre>
+        </section>
+        
+        <section id="attributes">
+            <h2>九、HTML5新属性</h2>
+            
+            <div class="note">
+                <strong>HTML5 vs HTML4的区别：</strong>
+                HTML5引入了许多新属性，增强了元素的功能和语义，简化了开发。
+            </div>
+            
+            <h3>9.1 data-* 自定义数据属性</h3>
+            
+            <pre><code>&lt;!-- data-*属性：用于存储自定义数据，不会影响页面显示 --&gt;
+&lt;div id="user" data-user-id="123" data-user-name="张三" data-user-role="admin"&gt;
+    用户信息
+&lt;/div&gt;
+
+&lt;script&gt;
+var user = document.getElementById('user');
+
+// 通过dataset访问data-*属性（注意：连字符会转换为驼峰命名）
+var userId = user.dataset.userId;      // 获取data-user-id
+var userName = user.dataset.userName;  // 获取data-user-name
+var userRole = user.dataset.userRole;  // 获取data-user-role
+
+// 设置data-*属性
+user.dataset.userEmail = 'zhangsan@example.com';  // 设置data-user-email
+
+// HTML4需要使用getAttribute/setAttribute，HTML5的dataset更简洁
+&lt;/script&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>data-*属性演示：</h4>
+                <div id="demo-data" data-product-id="1001" data-product-name="笔记本电脑" data-price="5999">
+                    产品信息（查看控制台）
+                </div>
+                <button onclick="showDataAttributes()">显示data属性</button>
+            </div>
+            
+            <h3>9.2 contenteditable - 可编辑内容</h3>
+            
+            <pre><code>&lt;!-- contenteditable属性：使元素内容可编辑，类似富文本编辑器 --&gt;
+&lt;div contenteditable="true"&gt;
+    这是可编辑的内容，点击即可编辑
+&lt;/div&gt;
+
+&lt;!-- contenteditable="true"：允许编辑 --&gt;
+&lt;!-- contenteditable="false"：禁止编辑 --&gt;
+&lt;!-- contenteditable="inherit"：继承父元素设置 --&gt;
+
+&lt;script&gt;
+var editable = document.querySelector('[contenteditable]');
+
+// 监听内容变化
+editable.addEventListener('input', function() {
+    console.log('内容已更改：', this.textContent);
+});
+
+// 获取HTML内容
+var html = editable.innerHTML;
+
+// 设置HTML内容
+editable.innerHTML = '&lt;strong&gt;新内容&lt;/strong&gt;';
+&lt;/script&gt;</code></pre>
+            
+            <div class="demo-box">
+                <h4>contenteditable演示：</h4>
+                <div contenteditable="true" style="border: 1px solid #ddd; padding: 1rem; min-height: 50px;">
+                    点击这里编辑内容
+                </div>
+            </div>
+            
+            <h3>9.3 hidden属性 - 隐藏元素</h3>
+            
+            <pre><code>&lt;!-- hidden属性：HTML5新增的隐藏元素方式，等同于CSS的display:none --&gt;
+&lt;div hidden&gt;这个元素被隐藏了&lt;/div&gt;
+
+&lt;script&gt;
+var element = document.querySelector('[hidden]');
+
+// 检查是否隐藏
+if (element.hidden) {
+    console.log('元素已隐藏');
+}
+
+// 显示元素
+element.hidden = false;
+
+// 隐藏元素
+element.hidden = true;
+
+// HTML4需要使用style.display='none'，HTML5的hidden属性更语义化
+&lt;/script&gt;</code></pre>
+            
+            <h3>9.4 spellcheck属性 - 拼写检查</h3>
+            
+            <pre><code>&lt;!-- spellcheck属性：启用或禁用拼写检查 --&gt;
+&lt;textarea spellcheck="true"&gt;输入英文单词会进行拼写检查&lt;/textarea&gt;
+&lt;input type="text" spellcheck="false"&gt;
+
+&lt;!-- spellcheck="true"：启用拼写检查（默认值） --&gt;
+&lt;!-- spellcheck="false"：禁用拼写检查 --&gt;</code></pre>
+            
+            <h3>9.5 translate属性 - 翻译控制</h3>
+            
+            <pre><code>&lt;!-- translate属性：控制内容是否应该被翻译 --&gt;
+&lt;p translate="yes"&gt;这段内容应该被翻译&lt;/p&gt;
+&lt;p translate="no"&gt;这段内容不应该被翻译（如品牌名、代码等）&lt;/p&gt;
+
+&lt;!-- translate="yes"：应该翻译（默认值） --&gt;
+&lt;!-- translate="no"：不应该翻译 --&gt;</code></pre>
+            
+            <h3>9.6 其他新属性</h3>
+            
+            <pre><code>&lt;!-- download属性：指定下载链接的文件名 --&gt;
+&lt;a href="file.pdf" download="我的文件.pdf"&gt;下载文件&lt;/a&gt;
+
+&lt;!-- media属性：指定链接的媒体类型 --&gt;
+&lt;a href="print.html" media="print"&gt;打印版本&lt;/a&gt;
+
+&lt;!-- ping属性：当点击链接时发送POST请求到指定URL（用于跟踪） --&gt;
+&lt;a href="page.html" ping="https://example.com/track"&gt;链接&lt;/a&gt;
+
+&lt;!-- reversed属性：列表倒序显示 --&gt;
+&lt;ol reversed&gt;
+    &lt;li&gt;第三项&lt;/li&gt;
+    &lt;li&gt;第二项&lt;/li&gt;
+    &lt;li&gt;第一项&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- start属性：指定有序列表的起始数字 --&gt;
+&lt;ol start="10"&gt;
+    &lt;li&gt;第十项&lt;/li&gt;
+    &lt;li&gt;第十一项&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- async和defer属性：控制脚本加载和执行时机 --&gt;
+&lt;script src="script.js" async&gt;&lt;/script&gt;  &lt;!-- 异步加载，下载完成后立即执行 --&gt;
+&lt;script src="script.js" defer&gt;&lt;/script&gt;  &lt;!-- 延迟执行，等HTML解析完成后执行 --&gt;</code></pre>
+        </section>
+        
+        <section>
+            <h2>十、HTML5其他重要特性</h2>
+            
+            <h3>10.1 WebSocket - 实时通信</h3>
+            <pre><code>&lt;script&gt;
+// WebSocket：HTML5提供的全双工通信协议，替代HTTP轮询
+var socket = new WebSocket('ws://example.com/socket');
+
+// 连接打开
+socket.onopen = function(event) {
+    console.log('WebSocket连接已建立');
+    socket.send('Hello Server');
+};
+
+// 接收消息
+socket.onmessage = function(event) {
+    console.log('收到消息：', event.data);
+};
+
+// 连接关闭
+socket.onclose = function(event) {
+    console.log('WebSocket连接已关闭');
+};
+
+// 连接错误
+socket.onerror = function(error) {
+    console.log('WebSocket错误：', error);
+};
+
+// 发送消息
+socket.send('消息内容');
+
+// 关闭连接
+socket.close();
+&lt;/script&gt;</code></pre>
+            
+            <h3>10.2 History API - 历史记录管理</h3>
+            <pre><code>&lt;script&gt;
+// History API：允许JavaScript操作浏览器历史记录
+
+// pushState：添加历史记录条目（不刷新页面）
+history.pushState({page: 1}, 'Page 1', '/page1');
+
+// replaceState：替换当前历史记录条目
+history.replaceState({page: 2}, 'Page 2', '/page2');
+
+// state：获取当前历史记录的状态对象
+var state = history.state;
+
+// popstate事件：当用户点击前进/后退按钮时触发
+window.addEventListener('popstate', function(event) {
+    console.log('历史记录状态：', event.state);
+    // 根据state更新页面内容
+});
+
+// HTML4无法在不刷新页面的情况下改变URL，HTML5的History API实现了单页应用
+&lt;/script&gt;</code></pre>
+            
+            <h3>10.3 离线应用 - Application Cache（已废弃）</h3>
+            <pre><code>&lt;!-- 注意：Application Cache已被废弃，推荐使用Service Workers --&gt;
+&lt;!-- 这里仅作说明 --&gt;
+&lt;html manifest="app.manifest"&gt;
+&lt;!-- manifest文件指定需要缓存的资源 --&gt;
+
+&lt;!-- app.manifest文件内容示例：
+CACHE MANIFEST
+# 版本号
+# 2014-01-01 v1
+
+# 需要缓存的文件
+CACHE:
+index.html
+style.css
+script.js
+image.jpg
+
+# 需要在线访问的文件
+NETWORK:
+api.php
+
+# 离线时的替代文件
+FALLBACK:
+/ /offline.html
+--&gt;</code></pre>
+            
+            <h3>10.4 Service Workers - 现代离线方案</h3>
+            <pre><code>&lt;script&gt;
+// Service Worker：现代Web应用的离线解决方案，替代Application Cache
+
+// 注册Service Worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+        .then(function(registration) {
+            console.log('Service Worker注册成功');
+        })
+        .catch(function(error) {
+            console.log('Service Worker注册失败：', error);
+        });
+}
+
+// sw.js（Service Worker脚本）
+// self.addEventListener('install', function(event) {
+//     event.waitUntil(
+//         caches.open('v1').then(function(cache) {
+//             return cache.addAll([
+//                 '/',
+//                 '/index.html',
+//                 '/style.css',
+//                 '/script.js'
+//             ]);
+//         })
+//     );
+// });
+//
+// self.addEventListener('fetch', function(event) {
+//     event.respondWith(
+//         caches.match(event.request).then(function(response) {
+//             return response || fetch(event.request);
+//         })
+//     );
+// });
+&lt;/script&gt;</code></pre>
+        </section>
+    </main>
+    
+    <!-- HTML5语义化标签：aside - 侧边栏内容 -->
+    <aside style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <section style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h2>HTML5总结</h2>
+            <ul>
+                <li><strong>语义化标签</strong>：使HTML结构更清晰，有助于SEO和可访问性</li>
+                <li><strong>表单增强</strong>：新增输入类型和属性，减少JavaScript验证代码</li>
+                <li><strong>媒体支持</strong>：原生音视频支持，无需插件</li>
+                <li><strong>Canvas绘图</strong>：强大的2D图形绘制能力</li>
+                <li><strong>本地存储</strong>：localStorage、sessionStorage、IndexedDB</li>
+                <li><strong>拖放API</strong>：原生拖放功能支持</li>
+                <li><strong>地理位置</strong>：获取用户位置信息</li>
+                <li><strong>Web Workers</strong>：后台线程处理，不阻塞主线程</li>
+                <li><strong>新属性</strong>：data-*、contenteditable、hidden等</li>
+                <li><strong>WebSocket</strong>：实时双向通信</li>
+                <li><strong>History API</strong>：单页应用路由管理</li>
+            </ul>
+        </section>
+    </aside>
+    
+    <!-- HTML5语义化标签：footer - 页脚 -->
+    <footer>
+        <p>&copy; 2024 HTML5学习指南 | 全面了解HTML5新特性</p>
+        <p>HTML5相比HTML4，提供了更强大的功能和更好的开发体验</p>
+    </footer>
+    
+    <script>
+        // ========== Canvas绘图演示 ==========
+        var canvas = document.getElementById('demoCanvas');
+        if (canvas) {
+            var ctx = canvas.getContext('2d');
+            
+            // 绘制矩形
+            ctx.fillStyle = '#667eea';
+            ctx.fillRect(50, 50, 100, 100);
+            
+            ctx.strokeStyle = '#764ba2';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(200, 50, 100, 100);
+            
+            // 绘制圆形
+            ctx.beginPath();
+            ctx.arc(150, 200, 50, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ff6b6b';
+            ctx.fill();
+            
+            // 绘制线条
+            ctx.beginPath();
+            ctx.moveTo(250, 150);
+            ctx.lineTo(350, 250);
+            ctx.strokeStyle = '#4ecdc4';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // 绘制文本
+            ctx.font = '20px Arial';
+            ctx.fillStyle = '#333';
+            ctx.fillText('HTML5 Canvas', 50, 280);
+        }
+        
+        // ========== localStorage演示 ==========
+        function saveToLocalStorage() {
+            var input = document.getElementById('storage-input');
+            var value = input.value;
+            if (value) {
+                localStorage.setItem('demoData', value);
+                document.getElementById('storage-output').textContent = '数据已保存到localStorage';
+                input.value = '';
+            }
+        }
+        
+        function readFromLocalStorage() {
+            var data = localStorage.getItem('demoData');
+            if (data) {
+                document.getElementById('storage-output').textContent = '读取的数据：' + data;
+            } else {
+                document.getElementById('storage-output').textContent = 'localStorage中没有数据';
+            }
+        }
+        
+        function clearLocalStorage() {
+            localStorage.removeItem('demoData');
+            document.getElementById('storage-output').textContent = 'localStorage已清空';
+        }
+        
+        // ========== 拖放演示 ==========
+        var drag1 = document.getElementById('drag1');
+        var drag2 = document.getElementById('drag2');
+        var dropZone = document.getElementById('dropZone');
+        
+        if (drag1 && dropZone) {
+            [drag1, drag2].forEach(function(dragElement) {
+                dragElement.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.textContent);
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+            });
+            
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+            });
+            
+            dropZone.addEventListener('dragenter', function(e) {
+                e.preventDefault();
+                this.classList.add('drag-over');
+            });
+            
+            dropZone.addEventListener('dragleave', function(e) {
+                this.classList.remove('drag-over');
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                var data = e.dataTransfer.getData('text/plain');
+                this.textContent = '已放置：' + data;
+                this.classList.remove('drag-over');
+            });
+        }
+        
+        // ========== 地理位置演示 ==========
+        var watchId = null;
+        
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var output = document.getElementById('location-output');
+                        output.innerHTML = '纬度：' + position.coords.latitude + '<br>' +
+                                         '经度：' + position.coords.longitude + '<br>' +
+                                         '精度：' + position.coords.accuracy + '米';
+                    },
+                    function(error) {
+                        var output = document.getElementById('location-output');
+                        output.textContent = '获取位置失败：' + error.message;
+                    }
+                );
+            } else {
+                document.getElementById('location-output').textContent = '您的浏览器不支持地理位置API';
+            }
+        }
+        
+        function watchLocation() {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    function(position) {
+                        var output = document.getElementById('location-output');
+                        output.innerHTML = '正在监听位置变化<br>' +
+                                         '纬度：' + position.coords.latitude + '<br>' +
+                                         '经度：' + position.coords.longitude;
+                    },
+                    function(error) {
+                        document.getElementById('location-output').textContent = '监听失败：' + error.message;
+                    }
+                );
+            }
+        }
+        
+        function stopWatch() {
+            if (watchId !== null) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+                document.getElementById('location-output').textContent = '已停止监听位置';
+            }
+        }
+        
+        // ========== range滑块输出更新 ==========
+        var rangeInput = document.getElementById('range');
+        var rangeOutput = document.getElementById('range-output');
+        if (rangeInput && rangeOutput) {
+            rangeInput.addEventListener('input', function() {
+                rangeOutput.textContent = this.value;
+            });
+        }
+        
+        // ========== data-*属性演示 ==========
+        function showDataAttributes() {
+            var element = document.getElementById('demo-data');
+            if (element) {
+                alert('产品ID：' + element.dataset.productId + '\n' +
+                      '产品名称：' + element.dataset.productName + '\n' +
+                      '价格：' + element.dataset.price + '元');
+            }
+        }
+    </script>
+</body>
+</html>
+

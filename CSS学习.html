@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS学习指南 - 全面系统知识点</title>
+    <link rel="stylesheet" href="CSS学习.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CSS学习指南</h1>
+        <p class="text-center">本页面展示了CSS的全面知识点，每个部分都包含相应的功能说明和代码示例。</p>
+
+        <!-- CSS变量和基础样式 -->
+        <div class="section">
+            <h2>1. CSS变量（自定义属性）</h2>
+            <p>CSS变量使用<code>:root</code>定义，可以在整个文档中复用。本页面使用CSS变量统一管理颜色、间距等样式值。</p>
+            <div style="background-color: var(--primary-color); color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                这是使用CSS变量设置的主色调背景
+            </div>
+        </div>
+
+        <!-- 盒模型 -->
+        <div class="section">
+            <h2>2. 盒模型（Box Model）</h2>
+            <p>盒模型包括：内容（content）、内边距（padding）、边框（border）、外边距（margin）。</p>
+            <div class="box-model">
+                <p>这是一个盒模型示例</p>
+                <p>包含：宽度300px、高度200px、内边距20px、外边距20px、边框5px</p>
+                <p>box-sizing: border-box 使宽度包含padding和border</p>
+            </div>
+        </div>
+
+        <!-- Flexbox布局 -->
+        <div class="section">
+            <h2>3. Flexbox布局</h2>
+            <p>Flexbox是一种一维布局方法，用于在行或列中排列元素。</p>
+            <div class="flex-container">
+                <div class="flex-item">Flex项目 1</div>
+                <div class="flex-item">Flex项目 2</div>
+                <div class="flex-item">Flex项目 3</div>
+            </div>
+            <p><strong>说明：</strong>使用display: flex创建flex容器，justify-content控制主轴对齐，align-items控制交叉轴对齐。</p>
+        </div>
+
+        <!-- Grid布局 -->
+        <div class="section">
+            <h2>4. Grid布局</h2>
+            <p>Grid是一种二维布局系统，可以同时控制行和列。</p>
+            <div class="grid-container">
+                <div class="grid-item">Grid项目 1</div>
+                <div class="grid-item">Grid项目 2</div>
+                <div class="grid-item">Grid项目 3</div>
+                <div class="grid-item">Grid项目 4</div>
+                <div class="grid-item">Grid项目 5</div>
+                <div class="grid-item">Grid项目 6</div>
+            </div>
+            <p><strong>说明：</strong>使用display: grid创建grid容器，grid-template-columns定义列，grid-template-rows定义行。</p>
+        </div>
+
+        <!-- 定位 -->
+        <div class="section" style="position: relative; min-height: 200px;">
+            <h2>5. 定位（Position）</h2>
+            <p>CSS定位有四种类型：static（默认）、relative（相对）、absolute（绝对）、fixed（固定）、sticky（粘性）。</p>
+            <div class="position-relative" style="background-color: #e8f4f8; padding: 10px; border: 2px solid var(--primary-color);">
+                相对定位：相对于自身原始位置偏移
+            </div>
+            <div style="position: absolute; top: 10px; right: 10px; background-color: #ffe8e8; padding: 10px; border: 2px solid #e74c3c;">
+                绝对定位：相对于最近的定位父元素
+            </div>
+        </div>
+
+        <!-- 文本样式 -->
+        <div class="section">
+            <h2>6. 文本样式</h2>
+            <p class="text-bold">这是粗体文本（font-weight: bold）</p>
+            <p class="text-italic">这是斜体文本（font-style: italic）</p>
+            <p class="text-underline">这是下划线文本（text-decoration: underline）</p>
+            <p class="text-center">这是居中对齐的文本（text-align: center）</p>
+            <p style="text-indent: 2em;">这是首行缩进2个字符的段落。首行缩进使用text-indent属性实现。</p>
+        </div>
+
+        <!-- 颜色和背景 -->
+        <div class="section">
+            <h2>7. 颜色和背景</h2>
+            <div class="color-demo" style="padding: 20px; margin: 10px 0; border-radius: 5px;">
+                <p style="color: white;">这是使用RGB颜色和线性渐变背景的示例</p>
+                <p style="color: rgba(255, 255, 255, 0.8);">RGBA颜色支持透明度（alpha通道）</p>
+            </div>
+            <p><strong>说明：</strong>可以使用颜色名称、十六进制、RGB、RGBA、HSL等多种方式定义颜色。</p>
+        </div>
+
+        <!-- 边框样式 -->
+        <div class="section">
+            <h2>8. 边框样式</h2>
+            <div class="border-solid" style="padding: 10px; margin: 10px 0;">
+                实线边框（border: 2px solid）
+            </div>
+            <div class="border-dashed" style="padding: 10px; margin: 10px 0;">
+                虚线边框（border: 2px dashed）
+            </div>
+            <div class="border-dotted" style="padding: 10px; margin: 10px 0;">
+                点线边框（border: 2px dotted）
+            </div>
+            <div class="border-radius" style="padding: 10px; margin: 10px 0; background-color: #e8f4f8; border: 2px solid var(--primary-color);">
+                圆角边框（border-radius）
+            </div>
+        </div>
+
+        <!-- 阴影效果 -->
+        <div class="section">
+            <h2>9. 阴影效果</h2>
+            <div class="box-shadow" style="padding: 20px; margin: 10px 0; background-color: white; border-radius: 5px;">
+                这是带有盒子阴影的元素（box-shadow）
+            </div>
+            <p class="text-shadow" style="font-size: 1.5em; color: var(--primary-color);">
+                这是带有文本阴影的文字（text-shadow）
+            </p>
+        </div>
+
+        <!-- 过渡效果 -->
+        <div class="section">
+            <h2>10. 过渡效果（Transition）</h2>
+            <p>将鼠标悬停在下面的按钮上查看过渡效果：</p>
+            <button class="transition">悬停查看过渡效果</button>
+            <p><strong>说明：</strong>transition属性可以在状态改变时创建平滑的动画效果。</p>
+        </div>
+
+        <!-- 动画 -->
+        <div class="section">
+            <h2>11. 动画（Animation）</h2>
+            <div class="animate-fadeIn" style="padding: 20px; background-color: var(--primary-color); color: white; border-radius: 5px; margin: 10px 0;">
+                淡入动画效果（fadeIn）
+            </div>
+            <div class="animate-slideIn" style="padding: 20px; background-color: var(--secondary-color); color: white; border-radius: 5px; margin: 10px 0;">
+                滑入动画效果（slideIn）
+            </div>
+            <p><strong>说明：</strong>使用@keyframes定义动画关键帧，animation属性应用动画。</p>
+        </div>
+
+        <!-- 变换 -->
+        <div class="section">
+            <h2>12. 变换（Transform）</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div class="transform-rotate" style="padding: 20px; background-color: var(--primary-color); color: white; border-radius: 5px;">
+                    旋转45度
+                </div>
+                <div class="transform-scale" style="padding: 20px; background-color: var(--secondary-color); color: white; border-radius: 5px;">
+                    缩放1.2倍
+                </div>
+                <div class="transform-translate" style="padding: 20px; background-color: #9b59b6; color: white; border-radius: 5px;">
+                    平移变换
+                </div>
+            </div>
+            <p><strong>说明：</strong>transform属性可以对元素进行旋转、缩放、平移、倾斜等变换。</p>
+        </div>
+
+        <!-- 伪类和伪元素 -->
+        <div class="section">
+            <h2>13. 伪类和伪元素</h2>
+            <p>伪类用于选择元素的特定状态，伪元素用于选择元素的特定部分。</p>
+            <p><strong>链接伪类示例：</strong></p>
+            <a href="#" class="link">未访问链接</a> | 
+            <a href="#" class="link" style="color: #9b59b6;">已访问链接</a> | 
+            <a href="#" class="link">悬停查看效果</a>
+            <p><strong>说明：</strong>:hover（悬停）、:active（激活）、:focus（焦点）、:visited（已访问）等是常用的伪类。</p>
+            <p class="element">这段文字使用了::before和::after伪元素添加了括号</p>
+            <p>这段文字的第一行会加粗并变色（::first-line），第一个字母会放大（::first-letter）。</p>
+        </div>
+
+        <!-- 列表样式 -->
+        <div class="section">
+            <h2>14. 列表样式</h2>
+            <ul class="custom-list">
+                <li>列表项 1 - 使用自定义样式</li>
+                <li>列表项 2 - 带有左边框和背景色</li>
+                <li>列表项 3 - 使用伪元素添加标记</li>
+            </ul>
+        </div>
+
+        <!-- 表格样式 -->
+        <div class="section">
+            <h2>15. 表格样式</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>属性</th>
+                        <th>说明</th>
+                        <th>示例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>border-collapse</td>
+                        <td>合并相邻边框</td>
+                        <td>collapse</td>
+                    </tr>
+                    <tr>
+                        <td>:hover</td>
+                        <td>鼠标悬停效果</td>
+                        <td>行背景变色</td>
+                    </tr>
+                    <tr>
+                        <td>:nth-child</td>
+                        <td>选择特定位置的子元素</td>
+                        <td>偶数行背景色</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 表单样式 -->
+        <div class="section">
+            <h2>16. 表单样式</h2>
+            <form style="max-width: 500px;">
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" placeholder="请输入姓名">
+                
+                <label for="email" style="display: block; margin-top: 10px;">邮箱：</label>
+                <input type="email" id="email" name="email" placeholder="请输入邮箱">
+                
+                <label for="message" style="display: block; margin-top: 10px;">留言：</label>
+                <textarea id="message" name="message" rows="4" placeholder="请输入留言"></textarea>
+                
+                <button type="submit" style="margin-top: 10px;">提交</button>
+            </form>
+            <p><strong>说明：</strong>:focus伪类用于设置表单元素获得焦点时的样式。</p>
+        </div>
+
+        <!-- 浮动 -->
+        <div class="section clearfix">
+            <h2>17. 浮动（Float）</h2>
+            <div class="float-left" style="width: 150px; height: 100px; background-color: var(--primary-color); color: white; padding: 10px; border-radius: 5px;">
+                左浮动元素
+            </div>
+            <p>这是围绕浮动元素的文本内容。浮动元素会脱离文档流，其他内容会围绕它排列。使用clearfix可以清除浮动影响。</p>
+            <div class="float-right" style="width: 150px; height: 100px; background-color: var(--secondary-color); color: white; padding: 10px; border-radius: 5px;">
+                右浮动元素
+            </div>
+            <p>这是另一段文本，展示了右浮动的效果。浮动常用于实现文字环绕图片的布局效果。</p>
+        </div>
+
+        <!-- 显示和可见性 -->
+        <div class="section">
+            <h2>18. 显示和可见性</h2>
+            <p><strong>display属性：</strong>控制元素的显示类型</p>
+            <ul>
+                <li>display: none - 完全隐藏，不占空间</li>
+                <li>display: block - 块级元素</li>
+                <li>display: inline - 行内元素</li>
+                <li>display: inline-block - 行内块元素</li>
+            </ul>
+            <p><strong>visibility属性：</strong>控制元素的可见性</p>
+            <ul>
+                <li>visibility: hidden - 隐藏但占空间</li>
+                <li>visibility: visible - 可见（默认）</li>
+            </ul>
+            <p><strong>opacity属性：</strong>控制透明度（0-1之间）</p>
+            <div style="opacity: 0.5; background-color: var(--primary-color); color: white; padding: 10px; border-radius: 5px; display: inline-block;">
+                透明度50%的元素
+            </div>
+        </div>
+
+        <!-- 溢出处理 -->
+        <div class="section">
+            <h2>19. 溢出处理（Overflow）</h2>
+            <p><strong>overflow: hidden</strong> - 隐藏溢出内容</p>
+            <div class="overflow-hidden" style="width: 200px; height: 100px; border: 2px solid var(--primary-color); padding: 10px;">
+                这是一段很长的文本内容，会被隐藏超出容器的部分。这是一段很长的文本内容，会被隐藏超出容器的部分。
+            </div>
+            <p style="margin-top: 20px;"><strong>overflow: scroll</strong> - 显示滚动条</p>
+            <div class="overflow-scroll" style="width: 200px; height: 100px; border: 2px solid var(--secondary-color); padding: 10px;">
+                这是一段很长的文本内容，会显示滚动条。这是一段很长的文本内容，会显示滚动条。这是一段很长的文本内容，会显示滚动条。
+            </div>
+        </div>
+
+        <!-- 文本溢出 -->
+        <div class="section">
+            <h2>20. 文本溢出处理</h2>
+            <p><strong>text-overflow: ellipsis</strong> - 超出部分显示省略号</p>
+            <div class="text-ellipsis" style="width: 300px; border: 1px solid #ddd; padding: 10px;">
+                这是一段很长的文本内容，超出部分会显示省略号...
+            </div>
+            <p style="margin-top: 20px;"><strong>说明：</strong>需要配合white-space: nowrap和overflow: hidden使用。</p>
+        </div>
+
+        <!-- 多列布局 -->
+        <div class="section">
+            <h2>21. 多列布局（Multi-column）</h2>
+            <div class="multi-column" style="text-align: justify;">
+                这是多列布局的示例文本。CSS多列布局可以将内容自动分成多列显示，就像报纸的排版一样。这对于长文本内容特别有用，可以提高阅读体验。多列布局使用column-count属性设置列数，column-gap设置列间距，column-rule设置列之间的分隔线。
+            </div>
+        </div>
+
+        <!-- 滤镜效果 -->
+        <div class="section">
+            <h2>22. 滤镜效果（Filter）</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div>
+                    <p>原始图片效果</p>
+                    <div style="width: 150px; height: 100px; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); border-radius: 5px;"></div>
+                </div>
+                <div>
+                    <p>模糊效果（blur）</p>
+                    <div class="filter-blur" style="width: 150px; height: 100px; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); border-radius: 5px;"></div>
+                </div>
+                <div>
+                    <p>灰度效果（grayscale）</p>
+                    <div class="filter-grayscale" style="width: 150px; height: 100px; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); border-radius: 5px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 选择器优先级 -->
+        <div class="section">
+            <h2>23. 选择器优先级</h2>
+            <p>CSS选择器优先级从高到低：</p>
+            <ol>
+                <li>内联样式（style属性）</li>
+                <li>ID选择器（#id）</li>
+                <li>类选择器、属性选择器、伪类（.class, [attr], :hover）</li>
+                <li>元素选择器、伪元素（div, ::before）</li>
+            </ol>
+            <p><strong>说明：</strong>当多个规则应用到同一元素时，优先级高的规则会覆盖优先级低的规则。</p>
+        </div>
+
+        <!-- 响应式设计 -->
+        <div class="section">
+            <h2>24. 响应式设计（媒体查询）</h2>
+            <p>媒体查询（@media）用于根据设备特性应用不同的样式。</p>
+            <ul>
+                <li><strong>max-width: 768px</strong> - 平板设备样式</li>
+                <li><strong>max-width: 480px</strong> - 手机设备样式</li>
+                <li><strong>print</strong> - 打印样式</li>
+            </ul>
+            <p><strong>说明：</strong>调整浏览器窗口大小查看响应式效果。在小屏幕上，布局会自动调整为单列。</p>
+        </div>
+
+        <!-- 层叠上下文 -->
+        <div class="section" style="position: relative; min-height: 150px;">
+            <h2>25. 层叠上下文（Z-index）</h2>
+            <div class="layer-1" style="position: absolute; top: 20px; left: 20px; width: 100px; height: 100px; background-color: var(--primary-color); color: white; padding: 10px; border-radius: 5px;">
+                层1 (z-index: 1)
+            </div>
+            <div class="layer-2" style="position: absolute; top: 40px; left: 40px; width: 100px; height: 100px; background-color: var(--secondary-color); color: white; padding: 10px; border-radius: 5px;">
+                层2 (z-index: 2)
+            </div>
+            <div class="layer-3" style="position: absolute; top: 60px; left: 60px; width: 100px; height: 100px; background-color: #9b59b6; color: white; padding: 10px; border-radius: 5px;">
+                层3 (z-index: 3)
+            </div>
+            <p style="margin-top: 180px;"><strong>说明：</strong>z-index值越大，元素越在上层。只有定位元素（position不为static）才能使用z-index。</p>
+        </div>
+
+        <!-- 自定义滚动条 -->
+        <div class="section">
+            <h2>26. 自定义滚动条</h2>
+            <div class="custom-scrollbar" style="width: 300px; height: 150px; overflow-y: scroll; border: 2px solid var(--primary-color); padding: 10px;">
+                <p>这是自定义滚动条的示例。滚动条的颜色和样式可以通过CSS自定义。</p>
+                <p>滚动这个区域查看自定义滚动条效果。</p>
+                <p>使用::-webkit-scrollbar伪元素可以自定义滚动条的样式。</p>
+                <p>这是更多内容，用于演示滚动效果。</p>
+                <p>继续滚动查看更多内容。</p>
+            </div>
+        </div>
+
+        <!-- 总结 -->
+        <div class="section">
+            <h2>总结</h2>
+            <p>本页面涵盖了CSS的核心知识点，包括：</p>
+            <ul class="custom-list">
+                <li>CSS变量和基础语法</li>
+                <li>盒模型和布局（Flexbox、Grid）</li>
+                <li>定位和浮动</li>
+                <li>文本和字体样式</li>
+                <li>颜色、背景和边框</li>
+                <li>阴影和滤镜效果</li>
+                <li>过渡和动画</li>
+                <li>伪类和伪元素</li>
+                <li>响应式设计和媒体查询</li>
+                <li>选择器优先级和层叠</li>
+            </ul>
+            <p class="text-center" style="margin-top: 30px; padding: 20px; background-color: var(--primary-color); color: white; border-radius: var(--border-radius);">
+                <strong>继续学习CSS，掌握更多高级技巧！</strong>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+

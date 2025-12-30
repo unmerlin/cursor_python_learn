@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<!-- 
+    HTML文档类型声明
+    DOCTYPE告诉浏览器使用哪个HTML版本来解析文档
+    这是HTML5的标准声明
+-->
+<html lang="zh-CN">
+<!-- 
+    <html>标签是HTML文档的根元素
+    lang属性指定文档的语言，zh-CN表示简体中文
+    所有其他HTML元素都包含在这个标签内
+-->
+<head>
+    <!-- 
+        <head>标签包含文档的元数据（metadata）
+        这些信息不会直接显示在页面上，但提供了关于文档的重要信息
+    -->
+    
+    <!-- 字符编码声明，告诉浏览器使用UTF-8编码来解析文档 -->
+    <meta charset="UTF-8">
+    
+    <!-- 
+        视口设置，用于响应式设计
+        width=device-width: 设置页面宽度等于设备宽度
+        initial-scale=1.0: 设置初始缩放比例为1.0
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 页面描述，用于SEO和搜索引擎显示 -->
+    <meta name="description" content="HTML知识点全面学习指南">
+    
+    <!-- 页面关键词，用于SEO -->
+    <meta name="keywords" content="HTML, 学习, 教程">
+    
+    <!-- 页面作者信息 -->
+    <meta name="author" content="HTML学习者">
+    
+    <!-- 页面标题，显示在浏览器标签页上 -->
+    <title>HTML知识点学习</title>
+    
+    <!-- 
+        内部样式表示例（CSS）
+        虽然这是HTML学习文件，但展示style标签的使用
+    -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        <body>标签包含所有在浏览器中可见的内容
+        包括文本、图片、链接、表单等
+    -->
+    
+    <!-- ==================== 标题标签 ==================== -->
+    <section>
+        <h1>一级标题 - HTML知识点学习</h1>
+        <!-- 
+            <h1>标签定义最重要的标题
+            一个页面通常只有一个h1标签
+            用于SEO和页面结构
+        -->
+        
+        <h2>二级标题 - 标题标签</h2>
+        <!-- 
+            <h2>标签定义二级标题
+            重要性次于h1
+        -->
+        
+        <h3>三级标题</h3>
+        <!-- <h3>标签定义三级标题 -->
+        
+        <h4>四级标题</h4>
+        <!-- <h4>标签定义四级标题 -->
+        
+        <h5>五级标题</h5>
+        <!-- <h5>标签定义五级标题 -->
+        
+        <h6>六级标题</h6>
+        <!-- <h6>标签定义六级标题，是最小的标题 -->
+    </section>
+    
+    <!-- ==================== 文本格式化标签 ==================== -->
+    <section>
+        <h2>文本格式化标签</h2>
+        
+        <!-- 段落标签 -->
+        <p>这是一个段落标签，用于包含一段文本内容。</p>
+        <!-- 
+            <p>标签定义段落
+            浏览器会自动在段落前后添加空白
+        -->
+        
+        <!-- 换行标签 -->
+        <p>这是第一行<br>这是第二行</p>
+        <!-- 
+            <br>标签是自闭合标签，用于强制换行
+            不需要闭合标签，可以写成<br>或<br/>
+        -->
+        
+        <!-- 水平线标签 -->
+        <hr>
+        <!-- 
+            <hr>标签创建一条水平分隔线
+            用于在视觉上分隔内容
+        -->
+        
+        <!-- 强调和重要性 -->
+        <p>
+            <strong>strong标签：表示重要文本，通常显示为粗体</strong><br>
+            <b>b标签：表示粗体文本（仅样式，无语义）</b><br>
+            <em>em标签：表示强调文本，通常显示为斜体</em><br>
+            <i>i标签：表示斜体文本（仅样式，无语义）</i><br>
+            <mark>mark标签：标记或高亮文本</mark><br>
+            <small>small标签：表示小号字体文本</small><br>
+            <del>del标签：表示删除的文本</del><br>
+            <ins>ins标签：表示插入的文本</ins><br>
+            <sub>sub标签：表示下标文本</sub><br>
+            <sup>sup标签：表示上标文本</sup>
+        </p>
+        
+        <!-- 引用标签 -->
+        <blockquote>
+            这是blockquote标签，用于引用大段文本。
+            浏览器通常会缩进显示。
+        </blockquote>
+        <!-- 
+            <blockquote>标签定义块级引用
+            通常用于引用其他来源的内容
+        -->
+        
+        <p>
+            <q>这是q标签，用于短引用，浏览器会自动添加引号</q>
+        </p>
+        <!-- <q>标签定义短的行内引用 -->
+        
+        <!-- 代码相关标签 -->
+        <p>
+            <code>code标签：用于显示代码片段</code><br>
+            <kbd>kbd标签：表示键盘输入</kbd><br>
+            <samp>samp标签：表示程序输出示例</samp><br>
+            <var>var标签：表示变量名</var>
+        </p>
+        
+        <!-- 预格式化文本 -->
+        <pre>
+pre标签：保留空格和换行
+    用于显示预格式化的文本
+        通常用于显示代码
+        </pre>
+        <!-- 
+            <pre>标签定义预格式化文本
+            保留空格、换行和制表符
+        -->
+        
+        <!-- 缩写和定义 -->
+        <p>
+            <abbr title="超文本标记语言">HTML</abbr>是网页的基础
+            <!-- <abbr>标签定义缩写，title属性提供完整形式 -->
+        </p>
+        
+        <p>
+            <dfn>dfn标签：定义术语，表示这是术语的定义</dfn>
+        </p>
+        
+        <!-- 地址标签 -->
+        <address>
+            address标签：用于联系信息<br>
+            作者：HTML学习者<br>
+            邮箱：example@email.com
+        </address>
+        <!-- <address>标签定义文档或文章的联系信息 -->
+        
+        <!-- 双向文本 -->
+        <p>
+            <bdo dir="rtl">bdo标签：控制文本方向，rtl表示从右到左</bdo>
+        </p>
+        <!-- <bdo>标签覆盖文本的默认方向 -->
+    </section>
+    
+    <!-- ==================== 链接和锚点 ==================== -->
+    <section>
+        <h2>链接和锚点</h2>
+        
+        <!-- 外部链接 -->
+        <p>
+            <a href="https://www.example.com" target="_blank">外部链接：在新标签页打开</a>
+            <!-- 
+                <a>标签定义超链接
+                href属性指定链接的目标URL
+                target="_blank"在新标签页打开链接
+            -->
+        </p>
+        
+        <!-- 内部链接 -->
+        <p>
+            <a href="#top">内部链接：跳转到页面顶部</a>
+            <!-- href="#id"可以跳转到页面内指定id的元素 -->
+        </p>
+        
+        <!-- 邮件链接 -->
+        <p>
+            <a href="mailto:example@email.com">邮件链接：发送邮件</a>
+            <!-- mailto:协议用于创建邮件链接 -->
+        </p>
+        
+        <!-- 电话链接 -->
+        <p>
+            <a href="tel:+1234567890">电话链接：拨打电话</a>
+            <!-- tel:协议用于创建电话链接 -->
+        </p>
+        
+        <!-- 下载链接 -->
+        <p>
+            <a href="file.pdf" download>下载链接：下载文件</a>
+            <!-- download属性表示链接用于下载资源 -->
+        </p>
+    </section>
+    
+    <!-- ==================== 列表 ==================== -->
+    <section>
+        <h2>列表</h2>
+        
+        <!-- 无序列表 -->
+        <h3>无序列表（ul）</h3>
+        <ul>
+            <!-- 
+                <ul>标签定义无序列表
+                列表项通常显示为项目符号
+            -->
+            <li>列表项1：li标签定义列表项</li>
+            <li>列表项2</li>
+            <li>列表项3</li>
+        </ul>
+        
+        <!-- 有序列表 -->
+        <h3>有序列表（ol）</h3>
+        <ol>
+            <!-- 
+                <ol>标签定义有序列表
+                列表项显示为数字或字母
+            -->
+            <li>第一项</li>
+            <li>第二项</li>
+            <li>第三项</li>
+        </ol>
+        
+        <!-- 定义列表 -->
+        <h3>定义列表（dl）</h3>
+        <dl>
+            <!-- 
+                <dl>标签定义定义列表
+                用于术语和定义的配对
+            -->
+            <dt>dt标签：定义术语</dt>
+            <!-- <dt>标签定义列表中的术语 -->
+            <dd>dd标签：描述或定义术语</dd>
+            <!-- <dd>标签描述或定义术语 -->
+            
+            <dt>HTML</dt>
+            <dd>超文本标记语言</dd>
+            
+            <dt>CSS</dt>
+            <dd>层叠样式表</dd>
+        </dl>
+        
+        <!-- 嵌套列表 -->
+        <h3>嵌套列表</h3>
+        <ul>
+            <li>第一级列表项
+                <ul>
+                    <li>第二级列表项1</li>
+                    <li>第二级列表项2</li>
+                </ul>
+            </li>
+            <li>第一级列表项</li>
+        </ul>
+    </section>
+    
+    <!-- ==================== 图片和媒体 ==================== -->
+    <section>
+        <h2>图片和媒体</h2>
+        
+        <!-- 图片标签 -->
+        <img src="placeholder.jpg" alt="图片描述文本" width="200" height="150">
+        <!-- 
+            <img>标签用于嵌入图片
+            src属性指定图片的URL或路径
+            alt属性提供图片的替代文本（重要：用于可访问性和SEO）
+            width和height属性设置图片尺寸
+        -->
+        
+        <!-- 图片作为链接 -->
+        <p>
+            <a href="https://www.example.com">
+                <img src="placeholder.jpg" alt="可点击的图片">
+            </a>
+            <!-- 图片可以嵌套在链接标签内，使图片可点击 -->
+        </p>
+        
+        <!-- 图片映射 -->
+        <img src="placeholder.jpg" alt="图片映射示例" usemap="#imagemap">
+        <map name="imagemap">
+            <!-- 
+                <map>标签定义图像映射
+                name属性与img的usemap属性关联
+            -->
+            <area shape="rect" coords="0,0,100,100" href="page1.html" alt="区域1">
+            <!-- 
+                <area>标签定义图像映射中的可点击区域
+                shape属性定义形状（rect, circle, poly）
+                coords属性定义坐标
+            -->
+        </map>
+        
+        <!-- 图片图形 -->
+        <figure>
+            <!-- 
+                <figure>标签定义独立的图片、图表、照片等
+                通常与figcaption一起使用
+            -->
+            <img src="placeholder.jpg" alt="示例图片">
+            <figcaption>figcaption标签：为图片添加标题或说明</figcaption>
+            <!-- <figcaption>标签为figure元素定义标题 -->
+        </figure>
+        
+        <!-- 音频标签 -->
+        <audio controls>
+            <!-- 
+                <audio>标签用于嵌入音频内容
+                controls属性显示播放控件
+            -->
+            <source src="audio.mp3" type="audio/mpeg">
+            <!-- <source>标签为媒体元素指定多个源文件 -->
+            您的浏览器不支持音频标签
+        </audio>
+        
+        <!-- 视频标签 -->
+        <video controls width="320" height="240">
+            <!-- 
+                <video>标签用于嵌入视频内容
+                controls属性显示播放控件
+            -->
+            <source src="video.mp4" type="video/mp4">
+            您的浏览器不支持视频标签
+        </video>
+        
+        <!-- 嵌入内容 -->
+        <embed src="content.swf" type="application/x-shockwave-flash" width="400" height="300">
+        <!-- 
+            <embed>标签用于嵌入外部内容
+            可以嵌入各种类型的媒体
+        -->
+        
+        <!-- 对象标签 -->
+        <object data="object.swf" type="application/x-shockwave-flash" width="400" height="300">
+            <!-- 
+                <object>标签用于嵌入对象
+                可以嵌入各种外部资源
+            -->
+            <param name="autoplay" value="false">
+            <!-- <param>标签为object元素定义参数 -->
+        </object>
+        
+        <!-- iframe内嵌框架 -->
+        <iframe src="https://www.example.com" width="600" height="400" title="内嵌页面">
+            <!-- 
+                <iframe>标签创建内嵌框架
+                用于在当前页面中嵌入另一个HTML页面
+            -->
+        </iframe>
+    </section>
+    
+    <!-- ==================== 表格 ==================== -->
+    <section>
+        <h2>表格</h2>
+        
+        <table border="1">
+            <!-- 
+                <table>标签定义表格
+                border属性设置边框（通常用CSS控制样式）
+            -->
+            <caption>caption标签：表格标题</caption>
+            <!-- <caption>标签为表格定义标题 -->
+            
+            <thead>
+                <!-- <thead>标签定义表格的页眉部分 -->
+                <tr>
+                    <!-- <tr>标签定义表格行 -->
+                    <th>th标签：表头单元格（粗体居中）</th>
+                    <!-- <th>标签定义表头单元格 -->
+                    <th>表头2</th>
+                    <th>表头3</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <!-- <tbody>标签定义表格的主体部分 -->
+                <tr>
+                    <td>td标签：普通表格单元格</td>
+                    <!-- <td>标签定义表格数据单元格 -->
+                    <td>数据2</td>
+                    <td>数据3</td>
+                </tr>
+                <tr>
+                    <td>第二行数据1</td>
+                    <td>第二行数据2</td>
+                    <td>第二行数据3</td>
+                </tr>
+            </tbody>
+            
+            <tfoot>
+                <!-- <tfoot>标签定义表格的页脚部分 -->
+                <tr>
+                    <td>tfoot标签：表格页脚</td>
+                    <td>页脚数据2</td>
+                    <td>页脚数据3</td>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <!-- 表格列组 -->
+        <table border="1">
+            <colgroup>
+                <!-- 
+                    <colgroup>标签定义表格的列组
+                    用于对列进行样式设置
+                -->
+                <col span="2" style="background-color: #f0f0f0">
+                <!-- <col>标签定义列组中的列 -->
+            </colgroup>
+            <tr>
+                <td>列组示例1</td>
+                <td>列组示例2</td>
+                <td>列组示例3</td>
+            </tr>
+        </table>
+        
+        <!-- 表格单元格合并 -->
+        <table border="1">
+            <tr>
+                <td colspan="2">colspan属性：跨2列合并单元格</td>
+                <!-- colspan属性定义单元格跨越的列数 -->
+                <td>普通单元格</td>
+            </tr>
+            <tr>
+                <td rowspan="2">rowspan属性：跨2行合并单元格</td>
+                <!-- rowspan属性定义单元格跨越的行数 -->
+                <td>数据1</td>
+                <td>数据2</td>
+            </tr>
+            <tr>
+                <td>数据3</td>
+                <td>数据4</td>
+            </tr>
+        </table>
+    </section>
+    
+    <!-- ==================== 表单 ==================== -->
+    <section>
+        <h2>表单</h2>
+        
+        <form action="/submit" method="post">
+            <!-- 
+                <form>标签定义表单
+                action属性指定提交表单时发送数据的URL
+                method属性指定HTTP方法（get或post）
+            -->
+            
+            <!-- 文本输入 -->
+            <label for="username">label标签：为表单控件提供标签</label>
+            <!-- 
+                <label>标签为表单控件定义标签
+                for属性关联到控件的id
+            -->
+            <input type="text" id="username" name="username" placeholder="placeholder属性：输入提示文本" required>
+            <!-- 
+                <input>标签定义输入控件
+                type属性指定输入类型
+                name属性定义字段名称
+                placeholder属性提供占位符文本
+                required属性表示必填字段
+            -->
+            <br><br>
+            
+            <!-- 密码输入 -->
+            <label for="password">密码：</label>
+            <input type="password" id="password" name="password" required>
+            <br><br>
+            
+            <!-- 邮箱输入 -->
+            <label for="email">邮箱：</label>
+            <input type="email" id="email" name="email">
+            <br><br>
+            
+            <!-- 数字输入 -->
+            <label for="age">年龄：</label>
+            <input type="number" id="age" name="age" min="1" max="120">
+            <br><br>
+            
+            <!-- 日期输入 -->
+            <label for="birthday">生日：</label>
+            <input type="date" id="birthday" name="birthday">
+            <br><br>
+            
+            <!-- 时间输入 -->
+            <label for="time">时间：</label>
+            <input type="time" id="time" name="time">
+            <br><br>
+            
+            <!-- 单选按钮 -->
+            <fieldset>
+                <!-- 
+                    <fieldset>标签将表单中的相关元素分组
+                    通常与legend一起使用
+                -->
+                <legend>legend标签：为fieldset定义标题</legend>
+                <!-- <legend>标签为fieldset定义标题 -->
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">男</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">女</label>
+            </fieldset>
+            <br>
+            
+            <!-- 复选框 -->
+            <fieldset>
+                <legend>兴趣爱好：</legend>
+                <input type="checkbox" id="sports" name="hobby" value="sports">
+                <label for="sports">运动</label>
+                <input type="checkbox" id="reading" name="hobby" value="reading">
+                <label for="reading">阅读</label>
+                <input type="checkbox" id="music" name="hobby" value="music">
+                <label for="music">音乐</label>
+            </fieldset>
+            <br>
+            
+            <!-- 下拉选择 -->
+            <label for="country">国家：</label>
+            <select id="country" name="country">
+                <!-- 
+                    <select>标签定义下拉选择列表
+                    name属性定义字段名称
+                -->
+                <option value="">请选择</option>
+                <!-- <option>标签定义选项 -->
+                <option value="china">中国</option>
+                <option value="usa">美国</option>
+                <option value="uk">英国</option>
+            </select>
+            <br><br>
+            
+            <!-- 多行文本输入 -->
+            <label for="message">留言：</label>
+            <textarea id="message" name="message" rows="4" cols="50" placeholder="textarea标签：多行文本输入"></textarea>
+            <!-- 
+                <textarea>标签定义多行文本输入
+                rows和cols属性定义大小
+            -->
+            <br><br>
+            
+            <!-- 文件上传 -->
+            <label for="file">文件上传：</label>
+            <input type="file" id="file" name="file" accept="image/*">
+            <!-- accept属性限制可接受的文件类型 -->
+            <br><br>
+            
+            <!-- 范围输入 -->
+            <label for="volume">音量：</label>
+            <input type="range" id="volume" name="volume" min="0" max="100" value="50">
+            <br><br>
+            
+            <!-- 颜色选择 -->
+            <label for="color">颜色：</label>
+            <input type="color" id="color" name="color">
+            <br><br>
+            
+            <!-- 搜索框 -->
+            <label for="search">搜索：</label>
+            <input type="search" id="search" name="search">
+            <br><br>
+            
+            <!-- URL输入 -->
+            <label for="website">网站：</label>
+            <input type="url" id="website" name="website">
+            <br><br>
+            
+            <!-- 隐藏字段 -->
+            <input type="hidden" name="token" value="secret123">
+            <!-- hidden类型的input在页面上不可见，但会随表单提交 -->
+            <br>
+            
+            <!-- 按钮 -->
+            <button type="submit">button标签：提交按钮</button>
+            <!-- 
+                <button>标签定义可点击的按钮
+                type属性可以是submit、reset或button
+            -->
+            <button type="reset">重置按钮</button>
+            <input type="submit" value="input提交按钮">
+            <!-- input type="submit"也可以创建提交按钮 -->
+            <input type="button" value="普通按钮" onclick="alert('按钮被点击')">
+        </form>
+        
+        <!-- 数据列表 -->
+        <label for="browser">浏览器：</label>
+        <input list="browsers" id="browser" name="browser">
+        <datalist id="browsers">
+            <!-- 
+                <datalist>标签为input提供预定义选项列表
+                用户可以从列表中选择或输入自定义值
+            -->
+            <option value="Chrome">
+            <option value="Firefox">
+            <option value="Safari">
+            <option value="Edge">
+        </datalist>
+    </section>
+    
+    <!-- ==================== 语义化标签（HTML5） ==================== -->
+    <section>
+        <h2>语义化标签（HTML5）</h2>
+        
+        <!-- 文档结构 -->
+        <header>
+            <!-- 
+                <header>标签定义文档或区域的页眉
+                通常包含标题、导航等
+            -->
+            <h1>header标签：页面或区域的页眉</h1>
+            <nav>
+                <!-- 
+                    <nav>标签定义导航链接
+                    用于主要的导航区域
+                -->
+                <a href="#home">首页</a> |
+                <a href="#about">关于</a> |
+                <a href="#contact">联系</a>
+            </nav>
+        </header>
+        
+        <main>
+            <!-- 
+                <main>标签定义文档的主要内容
+                一个文档只能有一个main标签
+            -->
+            <article>
+                <!-- 
+                    <article>标签定义独立的文章内容
+                    可以独立于文档的其余部分
+                -->
+                <h2>article标签：独立的文章内容</h2>
+                <p>文章内容...</p>
+                
+                <section>
+                    <!-- 
+                        <section>标签定义文档中的节
+                        用于对内容进行分组
+                    -->
+                    <h3>section标签：文档中的节</h3>
+                    <p>节的内容...</p>
+                </section>
+            </article>
+            
+            <aside>
+                <!-- 
+                    <aside>标签定义侧边栏内容
+                    通常与主要内容相关但可以独立存在
+                -->
+                <h3>aside标签：侧边栏内容</h3>
+                <p>侧边栏信息...</p>
+            </aside>
+        </main>
+        
+        <footer>
+            <!-- 
+                <footer>标签定义文档或区域的页脚
+                通常包含版权信息、联系方式等
+            -->
+            <p>footer标签：页面或区域的页脚</p>
+            <p>&copy; 2024 HTML学习</p>
+        </footer>
+        
+        <!-- 其他语义化标签 -->
+        <details>
+            <!-- 
+                <details>标签定义用户可以查看或隐藏的额外细节
+                通常与summary一起使用
+            -->
+            <summary>summary标签：details的可见标题（点击展开/折叠）</summary>
+            <!-- <summary>标签为details定义可见标题 -->
+            <p>这是details标签中的隐藏内容，点击summary可以展开或折叠。</p>
+        </details>
+        
+        <dialog open>
+            <!-- 
+                <dialog>标签定义对话框或窗口
+                open属性表示对话框默认打开
+            -->
+            <p>dialog标签：对话框或窗口</p>
+            <button onclick="this.parentElement.close()">关闭</button>
+        </dialog>
+        
+        <!-- 进度条 -->
+        <progress value="70" max="100">70%</progress>
+        <!-- 
+            <progress>标签定义任务的进度
+            value属性表示当前值，max属性表示最大值
+        -->
+        
+        <!-- 度量 -->
+        <meter value="0.6" min="0" max="1">60%</meter>
+        <!-- 
+            <meter>标签定义已知范围内的标量测量
+            用于显示测量值
+        -->
+        
+        <!-- 时间 -->
+        <time datetime="2024-01-01">time标签：表示日期或时间</time>
+        <!-- 
+            <time>标签定义日期或时间
+            datetime属性提供机器可读的格式
+        -->
+    </section>
+    
+    <!-- ==================== 其他重要标签 ==================== -->
+    <section>
+        <h2>其他重要标签</h2>
+        
+        <!-- 分区标签 -->
+        <div>
+            <!-- 
+                <div>标签是块级容器元素
+                用于对内容进行分组和布局
+                没有特定的语义含义
+            -->
+            div标签：块级容器元素，用于布局和分组
+        </div>
+        
+        <p>
+            <span>span标签：行内容器元素</span>，用于对文本进行样式设置或脚本操作
+            <!-- 
+                <span>标签是行内容器元素
+                用于对文本的一部分进行样式设置
+            -->
+        </p>
+        
+        <!-- 模板标签 -->
+        <template id="myTemplate">
+            <!-- 
+                <template>标签定义HTML模板
+                内容在页面加载时不会显示
+                可以通过JavaScript访问和使用
+            -->
+            <p>template标签：HTML模板内容</p>
+        </template>
+        
+        <!-- 脚本标签 -->
+        <script>
+            // <script>标签用于嵌入或引用JavaScript代码
+            // 可以放在head或body中
+            console.log('script标签：用于嵌入JavaScript代码');
+        </script>
+        
+        <!-- 无脚本标签 -->
+        <noscript>
+            <!-- 
+                <noscript>标签定义当脚本无法执行时显示的内容
+                用于不支持JavaScript的浏览器
+            -->
+            noscript标签：当浏览器不支持JavaScript时显示的内容
+        </noscript>
+        
+        <!-- 样式标签（已在head中展示） -->
+        <!-- 
+            <style>标签用于定义内部CSS样式
+            通常放在head标签中
+        -->
+        
+        <!-- 链接标签（已在head中展示） -->
+        <!-- 
+            <link>标签用于链接外部资源
+            如CSS文件、图标等
+            通常放在head标签中
+        -->
+        
+        <!-- 元数据标签（已在head中展示） -->
+        <!-- 
+            <meta>标签提供关于HTML文档的元数据
+            不会显示在页面上
+            通常放在head标签中
+        -->
+        
+        <!-- 基础URL标签 -->
+        <base href="https://www.example.com/" target="_blank">
+        <!-- 
+            <base>标签为页面上的所有相对URL指定基础URL
+            必须放在head标签中，且最多只能有一个
+        -->
+        
+        <!-- 标题组 -->
+        <hgroup>
+            <!-- 
+                <hgroup>标签用于对标题进行分组
+                将多个标题元素组合在一起
+            -->
+            <h1>主标题</h1>
+            <h2>副标题</h2>
+        </hgroup>
+        
+        <!-- 输出标签 -->
+        <form oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+            <input type="number" id="a" value="10"> +
+            <input type="number" id="b" value="20"> =
+            <output name="result" for="a b">30</output>
+            <!-- 
+                <output>标签表示计算结果
+                for属性关联到相关的输入元素
+            -->
+        </form>
+        
+        <!-- 标记标签 -->
+        <p>请记住<mark>mark标签：标记或高亮文本</mark>这个重要信息。</p>
+        
+        <!-- 进度和任务 -->
+        <p>任务进度：</p>
+        <progress value="65" max="100">65%</progress>
+        
+        <!-- 画布（需要JavaScript配合使用） -->
+        <canvas id="myCanvas" width="200" height="100" style="border:1px solid #000;">
+            <!-- 
+                <canvas>标签用于通过JavaScript绘制图形
+                需要JavaScript来实际绘制内容
+            -->
+            您的浏览器不支持canvas标签
+        </canvas>
+        
+        <!-- SVG图形 -->
+        <svg width="100" height="100">
+            <!-- 
+                <svg>标签定义SVG图形容器
+                SVG是用于矢量图形的XML格式
+            -->
+            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="2" fill="red" />
+            <!-- SVG中的circle元素定义圆形 -->
+        </svg>
+    </section>
+    
+    <!-- ==================== 全局属性说明 ==================== -->
+    <section>
+        <h2>全局属性说明</h2>
+        <p>以下是一些重要的全局属性，可以应用于大多数HTML元素：</p>
+        <ul>
+            <li><strong>id</strong>：为元素指定唯一标识符</li>
+            <li><strong>class</strong>：为元素指定一个或多个类名（用于CSS和JavaScript）</li>
+            <li><strong>style</strong>：为元素指定内联CSS样式</li>
+            <li><strong>title</strong>：为元素提供额外的提示信息（鼠标悬停时显示）</li>
+            <li><strong>lang</strong>：指定元素内容的语言</li>
+            <li><strong>dir</strong>：指定文本方向（ltr从左到右，rtl从右到左）</li>
+            <li><strong>contenteditable</strong>：指定元素内容是否可编辑</li>
+            <li><strong>hidden</strong>：隐藏元素（布尔属性）</li>
+            <li><strong>tabindex</strong>：指定元素的Tab键顺序</li>
+            <li><strong>accesskey</strong>：指定激活元素的快捷键</li>
+            <li><strong>data-*</strong>：自定义数据属性（如data-id、data-name等）</li>
+            <li><strong>draggable</strong>：指定元素是否可拖动</li>
+            <li><strong>spellcheck</strong>：指定是否对元素进行拼写检查</li>
+        </ul>
+        
+        <!-- 示例：使用全局属性 -->
+        <p id="example-id" class="example-class" title="这是一个示例" contenteditable="true" style="color: blue;">
+            这个段落使用了多个全局属性：id、class、title、contenteditable、style
+        </p>
+        
+        <p data-custom="value" draggable="true" tabindex="1">
+            这个段落使用了data-*、draggable和tabindex属性
+        </p>
+    </section>
+    
+    <!-- ==================== 字符实体 ==================== -->
+    <section>
+        <h2>字符实体</h2>
+        <p>HTML中的一些特殊字符需要使用字符实体来表示：</p>
+        <ul>
+            <li>&lt; 表示 &lt; （小于号）</li>
+            <li>&gt; 表示 &gt; （大于号）</li>
+            <li>&amp; 表示 &amp; （和号）</li>
+            <li>&quot; 表示 &quot; （双引号）</li>
+            <li>&apos; 表示 &apos; （单引号）</li>
+            <li>&nbsp; 表示非断行空格</li>
+            <li>&copy; 表示 &copy; （版权符号）</li>
+            <li>&reg; 表示 &reg; （注册商标符号）</li>
+            <li>&trade; 表示 &trade; （商标符号）</li>
+            <li>&#169; 表示版权符号（数字实体）</li>
+            <li>&#174; 表示注册商标符号（数字实体）</li>
+        </ul>
+    </section>
+    
+    <!-- ==================== HTML文档结构总结 ==================== -->
+    <section>
+        <h2>HTML文档结构总结</h2>
+        <pre>
+&lt;!DOCTYPE html&gt;          <!-- 文档类型声明 -->
+&lt;html lang="zh-CN"&gt;      <!-- 根元素，指定语言 -->
+    &lt;head&gt;               <!-- 头部：元数据 -->
+        &lt;meta charset="UTF-8"&gt;  <!-- 字符编码 -->
+        &lt;title&gt;标题&lt;/title&gt;     <!-- 页面标题 -->
+    &lt;/head&gt;
+    &lt;body&gt;               <!-- 主体：可见内容 -->
+        <!-- 页面内容 -->
+    &lt;/body&gt;
+&lt;/html&gt;
+        </pre>
+    </section>
+    
+    <!-- 返回顶部锚点 -->
+    <a id="top"></a>
+    <p><a href="#top">返回顶部</a></p>
+    
+</body>
+</html>
+
+
