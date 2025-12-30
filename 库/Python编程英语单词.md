@@ -194,3 +194,4 @@
 | loop detected | /luːp dɪˈtektɪd/ | 检测到循环 | loop+detected | 508 error | 检测到循环是无限重定向 |
 | not extended | /nɒt ɪkˈstendɪd/ | 未扩展 | not+extended | 510 error | 未扩展是缺少扩展 |
 | network authentication required | /ˈnetwɜːk ɔːˌθentɪˈkeɪʃn rɪˈkwaɪəd/ | 需要网络认证 | network+authentication+required | 511 error | 需要网络认证是网络访问控制 |
+
