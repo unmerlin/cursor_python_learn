@@ -18,13 +18,12 @@ if %errorlevel% neq 0 (
 )
 
 echo 请选择操作：
-echo.
 echo [1] 查看当前状态
 echo [2] 更新所有文件到 GitHub
 echo [3] 只查看修改内容（不提交）
 echo [4] 退出
 echo.
-set /p choice=请输入选项: 
+set /p choice=请输入选项 (1-4): 
 
 if "%choice%"=="1" goto status
 if "%choice%"=="2" goto update
