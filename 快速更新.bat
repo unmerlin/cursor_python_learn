@@ -80,9 +80,10 @@ echo.
 echo 正在提交更改...
 git commit -m "%commit_msg%"
 if %errorlevel% neq 0 (
-    echo 警告：提交失败，可能没有需要提交的更改
-    pause
-    exit /b 1
+    echo 提示：没有新的更改需要提交
+    echo 检查是否有未推送的提交...
+) else (
+    echo ✓ 提交成功
 )
 
 echo.
