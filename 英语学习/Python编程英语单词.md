@@ -196,3 +196,8 @@
 | network authentication required | /ˈnetwɜːk ɔːˌθentɪˈkeɪʃn rɪˈkwaɪəd/ | 需要网络认证 | network+authentication+required | 511 error | 需要网络认证是网络访问控制 |
 
 
+
+
+
+
+
