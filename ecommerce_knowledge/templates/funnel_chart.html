@@ -1,0 +1,529 @@
+{% extends "base.html" %}
+
+{% block title %}订单漏斗图 - 数据可视化分析{% endblock %}
+
+{% block extra_css %}
+<style>
+.funnel-example-note {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: #856404;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- 页面头部 -->
+<section class="page-header">
+    <div class="breadcrumb">
+        <a href="{{ url_for('index') }}">首页</a>
+        <span>/</span>
+        <span>数据可视化分析</span>
+        <span>/</span>
+        <span>漏斗图</span>
+    </div>
+    
+    <div class="page-header-content">
+        <div class="page-icon" style="--platform-color: #6b46c1">📊</div>
+        <div>
+            <h1 class="page-title">订单漏斗图分析</h1>
+            <p class="page-desc">可视化订单转化流程，分析各环节转化率</p>
+        </div>
+    </div>
+</section>
+
+<!-- 主内容区 -->
+<section class="formulas-section">
+    <div class="formula-card funnel-card">
+        <!-- 公式头部 -->
+        <div class="formula-header">
+            <div class="formula-title-group">
+                <h2 class="formula-name">订单转化漏斗</h2>
+                <span class="formula-english">Order Conversion Funnel</span>
+            </div>
+        </div>
+
+        <!-- 公式内容区 -->
+        <div class="formula-body funnel-body">
+            <!-- 左侧：说明区域 -->
+            <div class="formula-info">
+                <!-- 功能说明 -->
+                <div class="formula-description">
+                    <h4 class="info-label">📖 功能说明</h4>
+                    <p>通过漏斗图可视化订单转化流程，直观展示从下单到成交各环节的订单数量和转化率，帮助发现转化瓶颈。</p>
+                </div>
+
+                <!-- 漏斗图含义 -->
+                <div class="formula-application">
+                    <h4 class="info-label">💡 漏斗图含义</h4>
+                    <p>漏斗图模拟订单从创建到完成的流转过程：</p>
+                    <ul class="formula-notes">
+                        <li><strong>等待买家付款</strong>：订单已创建，等待付款</li>
+                        <li><strong>买家已付款</strong>：付款成功，等待发货</li>
+                        <li><strong>待发货</strong>：订单已确认，准备发货</li>
+                        <li><strong>卖家已发货</strong>：商品已发出，配送中</li>
+                        <li><strong>交易成功</strong>：订单完成，交易成功</li>
+                    </ul>
+                    <p style="margin-top: var(--spacing-sm); font-size: 0.85rem; color: var(--text-muted);">
+                        <strong>异常订单（已取消、退款中）将单独统计，不计入漏斗流程</strong>
+                    </p>
+                </div>
+
+                <!-- 应用场景 -->
+                <div class="formula-critical">
+                    <h4 class="info-label">🎯 应用场景</h4>
+                    <div class="critical-content">
+                        <ul class="formula-notes">
+                            <li>分析订单转化率，找出流失环节</li>
+                            <li>对比不同时间段的转化效率</li>
+                            <li>评估运营活动对转化的影响</li>
+                            <li>优化订单流程，提升成交率</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 标准示例漏斗图 -->
+                <div class="formula-example">
+                    <h4 class="info-label">📊 标准示例漏斗图</h4>
+                    <div id="example-funnel" style="width: 100%; height: 400px;"></div>
+                    <div class="funnel-example-note">
+                        <strong>⚠️ 注意：</strong>此为示例数据（非标准，仅供对比参考），实际转化率因行业、品类、运营策略不同而有较大差异。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：操作区域 -->
+            <div class="formula-calculator funnel-calculator">
+                <h4 class="calculator-title">📤 上传数据</h4>
+                
+                <!-- 模板下载 -->
+                <div class="rucang-section">
+                    <label class="rucang-label">第一步：下载模板</label>
+                    <a href="{{ url_for('funnel_template') }}" class="download-template-btn" download>
+                        <span>📥</span>
+                        <span>下载Excel模板</span>
+                    </a>
+                    <p class="help-text">下载模板并按格式填写订单状态数据</p>
+                </div>
+
+                <!-- 文件上传 -->
+                <div class="rucang-section">
+                    <label class="rucang-label">第二步：上传文件</label>
+                    <div class="file-upload-area" id="file-upload-area">
+                        <input type="file" id="file-input" accept=".xlsx" style="display: none;">
+                        <div class="upload-placeholder" id="upload-placeholder">
+                            <span class="upload-icon">📁</span>
+                            <p>点击或拖拽上传Excel文件</p>
+                            <p class="upload-hint">支持.xlsx格式</p>
+                        </div>
+                        <div class="upload-success" id="upload-success" style="display: none;">
+                            <span class="success-icon">✓</span>
+                            <p id="file-name"></p>
+                            <button type="button" class="reupload-btn" onclick="resetUpload()">重新上传</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 计算按钮 -->
+                <button type="button" class="calc-button" id="calculate-btn" onclick="analyzeFunnel()" disabled>
+                    生成漏斗图
+                </button>
+                
+                <!-- 加载提示 -->
+                <div class="loading" id="loading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>分析中...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 分析结果区域 -->
+<section class="result-section" id="result-section" style="display: none;">
+    <!-- 汇总统计 -->
+    <div class="summary-cards">
+        <div class="summary-card">
+            <div class="summary-icon">📦</div>
+            <div class="summary-content">
+                <h4>总订单数</h4>
+                <p class="summary-value" id="total-orders">--</p>
+                <p class="summary-unit">单</p>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon">✅</div>
+            <div class="summary-content">
+                <h4>有效订单</h4>
+                <p class="summary-value" id="valid-orders">--</p>
+                <p class="summary-unit">单</p>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon">⚠️</div>
+            <div class="summary-content">
+                <h4>异常订单</h4>
+                <p class="summary-value" id="abnormal-orders">--</p>
+                <p class="summary-unit">单</p>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon">🎯</div>
+            <div class="summary-content">
+                <h4>最终成功率</h4>
+                <p class="summary-value" id="success-rate">--</p>
+                <p class="summary-unit">%</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户数据漏斗图 -->
+    <div class="result-table-container">
+        <div class="result-header">
+            <h3>📊 您的订单漏斗图</h3>
+            <button class="export-btn" onclick="exportFunnelChart()">
+                <span>📥</span>
+                <span>导出图表</span>
+            </button>
+        </div>
+        <div id="user-funnel" style="width: 100%; height: 500px;"></div>
+    </div>
+
+    <!-- 效率分析建议 -->
+    <div class="result-table-container">
+        <h3 style="margin-bottom: var(--spacing-lg);">📊 效率分析建议</h3>
+        <div class="efficiency-grid">
+            <div class="efficiency-card">
+                <div class="efficiency-header">
+                    <span class="efficiency-icon">🎯</span>
+                    <h4>交易转化效率</h4>
+                </div>
+                <div class="efficiency-body">
+                    <div class="efficiency-value" id="conversion-rate-value">--</div>
+                    <div class="efficiency-desc">等待买家付款 → 买家已付款 → 交易成功</div>
+                    <div class="efficiency-note">衡量从下单到成功的整体转化效率</div>
+                </div>
+            </div>
+
+            <div class="efficiency-card">
+                <div class="efficiency-header">
+                    <span class="efficiency-icon">💰</span>
+                    <h4>支付效率</h4>
+                </div>
+                <div class="efficiency-body">
+                    <div class="efficiency-value" id="payment-rate-value">--</div>
+                    <div class="efficiency-desc">等待买家付款 → 买家已付款</div>
+                    <div class="efficiency-note">衡量付款环节的转化率</div>
+                </div>
+            </div>
+
+            <div class="efficiency-card">
+                <div class="efficiency-header">
+                    <span class="efficiency-icon">📦</span>
+                    <h4>履约效率</h4>
+                </div>
+                <div class="efficiency-body">
+                    <div class="efficiency-value" id="fulfillment-rate-value">--</div>
+                    <div class="efficiency-desc">买家已付款 → 待发货 → 卖家已发货</div>
+                    <div class="efficiency-note">衡量从付款到发货的处理效率</div>
+                </div>
+            </div>
+
+            <div class="efficiency-card">
+                <div class="efficiency-header">
+                    <span class="efficiency-icon">✅</span>
+                    <h4>交付完成率</h4>
+                </div>
+                <div class="efficiency-body">
+                    <div class="efficiency-value" id="delivery-rate-value">--</div>
+                    <div class="efficiency-desc">卖家已发货 → 交易成功</div>
+                    <div class="efficiency-note">衡量从发货到成交的完成率</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 转化率数据表 -->
+    <div class="result-table-container">
+        <h3 style="margin-bottom: var(--spacing-lg);">📋 转化率详细数据</h3>
+        <div class="table-wrapper">
+            <table class="result-table" id="conversion-table">
+                <thead>
+                    <tr>
+                        <th>订单状态</th>
+                        <th>订单数量</th>
+                        <th>转化率</th>
+                        <th>流失率</th>
+                    </tr>
+                </thead>
+                <tbody id="conversion-tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 异常订单统计 -->
+    <div class="logic-explanation">
+        <h4>⚠️ 异常订单统计</h4>
+        <div class="logic-content">
+            <p><strong>已取消订单：</strong><span id="cancelled-count">--</span> 单</p>
+            <p><strong>退款中订单：</strong><span id="refund-count">--</span> 单</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">
+                异常订单不计入漏斗转化流程，但会影响整体运营效率，建议重点关注异常订单比例，分析原因并优化。
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- 返回链接 -->
+<section class="related-section">
+    <h3 class="related-title">返回</h3>
+    <div class="related-grid">
+        <a href="{{ url_for('index') }}" class="related-card">
+            <span class="related-icon">🏠</span>
+            <span class="related-name">首页</span>
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- 引入 Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+<script>
+let uploadedFile = null;
+let userData = null;
+
+// 绘制标准示例漏斗图（反转顺序，交易成功在顶部）
+function drawExampleFunnel() {
+    const data = [{
+        type: 'funnel',
+        y: ['交易成功', '卖家已发货', '待发货', '买家已付款', '等待买家付款'],
+        x: [650, 700, 750, 800, 1000],
+        textinfo: "value+percent initial",
+        textposition: "inside",
+        marker: {
+            color: ["#9f7aea", "#4299e1", "#38b2ac", "#48bb78", "#667eea"]
+        },
+        connector: {
+            line: {
+                color: "royalblue",
+                dash: "dot",
+                width: 2
+            }
+        }
+    }];
+
+    const layout = {
+        title: {
+            text: '标准示例数据（非标准，仅供对比参考）',
+            font: { size: 14 }
+        },
+        margin: { l: 150, r: 50, t: 50, b: 50 },
+        paper_bgcolor: '#f7fafc',
+        plot_bgcolor: '#f7fafc'
+    };
+
+    const config = {
+        responsive: true,
+        displayModeBar: false
+    };
+
+    Plotly.newPlot('example-funnel', data, layout, config);
+}
+
+// 页面加载时绘制示例漏斗图
+document.addEventListener('DOMContentLoaded', function() {
+    drawExampleFunnel();
+});
+
+// 文件上传相关代码（复用入仓预估的逻辑）
+document.getElementById('file-upload-area').addEventListener('click', function(e) {
+    if (e.target.classList.contains('reupload-btn')) return;
+    document.getElementById('file-input').click();
+});
+
+document.getElementById('file-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        handleFileUpload(file);
+    }
+});
+
+const uploadArea = document.getElementById('file-upload-area');
+uploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.name.endsWith('.xlsx')) {
+        handleFileUpload(file);
+    } else {
+        alert('请上传.xlsx格式文件');
+    }
+});
+
+function handleFileUpload(file) {
+    uploadedFile = file;
+    document.getElementById('upload-placeholder').style.display = 'none';
+    document.getElementById('upload-success').style.display = 'flex';
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('calculate-btn').disabled = false;
+}
+
+function resetUpload() {
+    uploadedFile = null;
+    document.getElementById('file-input').value = '';
+    document.getElementById('upload-placeholder').style.display = 'flex';
+    document.getElementById('upload-success').style.display = 'none';
+    document.getElementById('calculate-btn').disabled = true;
+    document.getElementById('result-section').style.display = 'none';
+}
+
+async function analyzeFunnel() {
+    if (!uploadedFile) {
+        alert('请先上传文件');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', uploadedFile);
+
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('calculate-btn').disabled = true;
+
+    try {
+        const response = await fetch('/visual/funnel/analyze', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            userData = result;
+            displayFunnelResults(result);
+        } else {
+            alert('分析失败: ' + result.error);
+        }
+    } catch (error) {
+        alert('请求失败: ' + error.message);
+    } finally {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('calculate-btn').disabled = false;
+    }
+}
+
+function displayFunnelResults(result) {
+    // 显示结果区域
+    document.getElementById('result-section').style.display = 'block';
+    
+    setTimeout(() => {
+        document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+
+    // 汇总统计
+    document.getElementById('total-orders').textContent = result.summary.total_orders;
+    document.getElementById('valid-orders').textContent = result.summary.valid_orders;
+    document.getElementById('abnormal-orders').textContent = result.summary.abnormal_orders;
+    document.getElementById('success-rate').textContent = result.summary.success_rate;
+
+    // 绘制用户漏斗图（反转顺序，交易成功在顶部）
+    const funnelY = result.funnel_data.map(item => item.status).reverse();
+    const funnelX = result.funnel_data.map(item => item.count).reverse();
+
+    const userData = [{
+        type: 'funnel',
+        y: funnelY,
+        x: funnelX,
+        textinfo: "value+percent initial",
+        textposition: "inside",
+        marker: {
+            color: ["#9f7aea", "#4299e1", "#38b2ac", "#48bb78", "#667eea"]
+        },
+        connector: {
+            line: {
+                color: "royalblue",
+                dash: "dot",
+                width: 2
+            }
+        }
+    }];
+
+    const userLayout = {
+        margin: { l: 150, r: 50, t: 20, b: 50 },
+        paper_bgcolor: 'white',
+        plot_bgcolor: 'white'
+    };
+
+    const config = {
+        responsive: true,
+        displayModeBar: true,
+        modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d', 'autoScale2d'],
+        displaylogo: false
+    };
+
+    Plotly.newPlot('user-funnel', userData, userLayout, config);
+
+    // 显示效率分析
+    if (result.efficiency) {
+        document.getElementById('conversion-rate-value').textContent = result.efficiency.conversion_rate + '%';
+        document.getElementById('payment-rate-value').textContent = result.efficiency.payment_rate + '%';
+        document.getElementById('fulfillment-rate-value').textContent = result.efficiency.fulfillment_rate + '%';
+        document.getElementById('delivery-rate-value').textContent = result.efficiency.delivery_rate + '%';
+    }
+
+    // 转化率表格
+    const tbody = document.getElementById('conversion-tbody');
+    tbody.innerHTML = '';
+    
+    result.funnel_data.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        const lossRate = index === 0 ? 0 : (result.funnel_data[0].count - item.count) / result.funnel_data[0].count * 100;
+        tr.innerHTML = `
+            <td>${item.status}</td>
+            <td class="highlight-number">${item.count}</td>
+            <td><span class="status-badge need">${item.rate}%</span></td>
+            <td>${lossRate.toFixed(2)}%</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // 异常订单统计
+    document.getElementById('cancelled-count').textContent = result.abnormal_data['已取消'];
+    document.getElementById('refund-count').textContent = result.abnormal_data['退款中的订单'];
+}
+
+function exportFunnelChart() {
+    if (!userData) {
+        alert('没有可导出的图表');
+        return;
+    }
+
+    Plotly.downloadImage('user-funnel', {
+        format: 'png',
+        width: 1200,
+        height: 800,
+        filename: '订单漏斗图_' + new Date().toISOString().slice(0, 10)
+    });
+}
+</script>
+{% endblock %}
+
+{% set platforms = platforms %}
+{% set metrics = metrics %}
+

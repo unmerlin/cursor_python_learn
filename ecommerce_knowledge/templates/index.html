@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}电商运营数据分析 - 公式大全{% endblock %}
+
+{% block content %}
+<!-- 头部横幅 -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">电商运营数据公式</h1>
+        <p class="hero-subtitle">掌握核心数据指标，提升运营决策能力</p>
+        <p class="hero-desc">覆盖淘宝、京东、抖音、拼多多、外卖五大平台</p>
+    </div>
+    <div class="hero-decoration">
+        <div class="floating-icon" style="--delay: 0s; --x: 10%; --y: 20%;">📊</div>
+        <div class="floating-icon" style="--delay: 0.5s; --x: 85%; --y: 15%;">💰</div>
+        <div class="floating-icon" style="--delay: 1s; --x: 75%; --y: 70%;">📈</div>
+        <div class="floating-icon" style="--delay: 1.5s; --x: 15%; --y: 75%;">🔄</div>
+    </div>
+</section>
+
+<!-- 平台卡片 -->
+<section class="platforms-section">
+    <div class="section-header">
+        <h2 class="section-title">选择平台</h2>
+        <p class="section-desc">选择一个平台开始学习</p>
+    </div>
+    
+    <div class="platforms-grid">
+        {% for plat_id, plat_data in platforms.items() %}
+        <a href="{{ url_for('platform_index', platform_id=plat_id) }}" class="platform-card" data-platform="{{ plat_id }}">
+            <div class="platform-card-icon" style="--platform-color: {{ plat_data.color }}">{{ plat_data.icon }}</div>
+            <h3 class="platform-card-title">{{ plat_data.name }}</h3>
+            <p class="platform-card-desc">查看该平台的所有数据指标公式</p>
+            <div class="platform-card-arrow">→</div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- 指标分类预览 -->
+<section class="metrics-preview-section">
+    <div class="section-header">
+        <h2 class="section-title">指标分类</h2>
+        <p class="section-desc">六大核心指标类别</p>
+    </div>
+    
+    <div class="metrics-preview-grid">
+        {% for metric_id, metric_info in metrics.items() %}
+        <div class="metric-preview-card">
+            <div class="metric-preview-icon">{{ metric_info.icon }}</div>
+            <h4 class="metric-preview-name">{{ metric_info.title }}</h4>
+            <p class="metric-preview-desc">{{ metric_info.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- 使用说明 -->
+<section class="guide-section">
+    <div class="section-header">
+        <h2 class="section-title">如何使用</h2>
+    </div>
+    
+    <div class="guide-steps">
+        <div class="guide-step">
+            <div class="step-number">1</div>
+            <h4 class="step-title">选择平台</h4>
+            <p class="step-desc">从左侧导航或首页选择要学习的平台</p>
+        </div>
+        <div class="guide-step">
+            <div class="step-number">2</div>
+            <h4 class="step-title">选择指标</h4>
+            <p class="step-desc">在平台下选择要学习的指标类别</p>
+        </div>
+        <div class="guide-step">
+            <div class="step-number">3</div>
+            <h4 class="step-title">学习计算</h4>
+            <p class="step-desc">查看公式说明，使用计算器练习</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% set platforms = platforms %}
+{% set metrics = metrics %}

@@ -1,0 +1,467 @@
+{% extends "base.html" %}
+
+{% block title %}京东 - 入仓预估 - 电商运营数据分析{% endblock %}
+
+{% block content %}
+<!-- 页面头部 -->
+<section class="page-header">
+    <div class="breadcrumb">
+        <a href="{{ url_for('index') }}">首页</a>
+        <span>/</span>
+        <a href="{{ url_for('platform_index', platform_id='jd') }}">京东</a>
+        <span>/</span>
+        <span>入仓预估</span>
+    </div>
+    
+    <div class="page-header-content">
+        <div class="page-icon" style="--platform-color: {{ platform.color }}">📦</div>
+        <div>
+            <h1 class="page-title">京东 - 入仓预估</h1>
+            <p class="page-desc">根据历史销量预估入仓数量</p>
+        </div>
+    </div>
+</section>
+
+<!-- 主内容区 -->
+<section class="formulas-section">
+    <div class="formula-card rucang-card" id="rucang">
+        <!-- 公式头部 -->
+        <div class="formula-header">
+            <div class="formula-title-group">
+                <h2 class="formula-name">入仓数量预估</h2>
+                <span class="formula-english">Warehouse Stock Forecast</span>
+            </div>
+        </div>
+
+        <!-- 公式内容区 -->
+        <div class="formula-body rucang-body">
+            <!-- 左侧：功能说明 -->
+            <div class="formula-info">
+                <!-- 功能说明 -->
+                <div class="formula-description">
+                    <h4 class="info-label">📖 功能说明</h4>
+                    <p>根据商品的历史销量数据，使用加权平均算法预估未来30天的销售需求，并计算建议入仓数量。</p>
+                    <p>支持上传Excel文件批量计算，提供模板下载和结果导出功能。</p>
+                </div>
+
+                <!-- 应用场景 -->
+                <div class="formula-application">
+                    <h4 class="info-label">💡 应用场景</h4>
+                    <p>适用于京东自营商品的库存管理，帮助商家：</p>
+                    <ul class="formula-notes">
+                        <li>根据近期销量趋势科学预测未来需求</li>
+                        <li>避免库存积压或缺货情况</li>
+                        <li>优化仓储成本和资金周转</li>
+                        <li>提前规划补货计划</li>
+                    </ul>
+                </div>
+
+                <!-- 计算公式 -->
+                <div class="formula-critical">
+                    <h4 class="info-label">📐 计算逻辑</h4>
+                    <div class="critical-content">
+                        <p><strong>1. 计算各周期日均销量：</strong></p>
+                        <p>• 7天日均 = 7天销量 ÷ 7</p>
+                        <p>• 15天日均 = 15天销量 ÷ 15</p>
+                        <p>• 30天日均 = 30天销量 ÷ 30</p>
+                        <p>• 90天日均 = 90天销量 ÷ 90</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>2. 加权平均计算：</strong></p>
+                        <p>加权日均 = (7天日均×权重1 + 15天日均×权重2 + 30天日均×权重3 + 90天日均×权重4) ÷ 权重总和</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                            默认权重：7天=4，15天=3，30天=2，90天=1（近期权重更大）
+                        </p>
+                        
+                        <p style="margin-top: 1rem;"><strong>3. 预估销量：</strong></p>
+                        <p>预估30天销量 = 加权日均 × 30</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>4. 建议入仓数量：</strong></p>
+                        <p>建议入仓 = 预估30天销量 × 安全系数 - 现有库存</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                            安全系数默认1.2，若结果 < 0 则显示为0
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 数据示例 -->
+                <div class="formula-example">
+                    <h4 class="info-label">📊 数据示例</h4>
+                    <div class="example-table">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>商品ID</th>
+                                    <th>7天销量</th>
+                                    <th>15天销量</th>
+                                    <th>30天销量</th>
+                                    <th>90天销量</th>
+                                    <th>现有库存</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>示例001</td>
+                                    <td>100</td>
+                                    <td>180</td>
+                                    <td>350</td>
+                                    <td>1000</td>
+                                    <td>50</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：操作区域 -->
+            <div class="formula-calculator rucang-calculator">
+                <h4 class="calculator-title">📤 上传数据</h4>
+                
+                <!-- 模板下载 -->
+                <div class="rucang-section">
+                    <label class="rucang-label">第一步：下载模板</label>
+                    <a href="{{ url_for('jd_rucang_template') }}" class="download-template-btn" download>
+                        <span>📥</span>
+                        <span>下载Excel模板</span>
+                    </a>
+                    <p class="help-text">下载模板并按格式填写商品数据</p>
+                </div>
+
+                <!-- 文件上传 -->
+                <div class="rucang-section">
+                    <label class="rucang-label">第二步：上传文件</label>
+                    <div class="file-upload-area" id="file-upload-area">
+                        <input type="file" id="file-input" accept=".xlsx" style="display: none;">
+                        <div class="upload-placeholder" id="upload-placeholder">
+                            <span class="upload-icon">📁</span>
+                            <p>点击或拖拽上传Excel文件</p>
+                            <p class="upload-hint">支持.xlsx格式</p>
+                        </div>
+                        <div class="upload-success" id="upload-success" style="display: none;">
+                            <span class="success-icon">✓</span>
+                            <p id="file-name"></p>
+                            <button type="button" class="reupload-btn" onclick="resetUpload()">重新上传</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 参数设置 -->
+                <div class="rucang-section">
+                    <label class="rucang-label">第三步：参数设置</label>
+                    
+                    <div class="param-group">
+                        <label for="safety_factor">安全系数</label>
+                        <input type="number" id="safety_factor" value="1.2" step="0.1" min="1" max="3" class="param-input">
+                    </div>
+                    
+                    <div class="param-grid">
+                        <div class="param-group">
+                            <label for="weight_7">7天权重</label>
+                            <input type="number" id="weight_7" value="4" step="0.5" min="0" class="param-input">
+                        </div>
+                        <div class="param-group">
+                            <label for="weight_15">15天权重</label>
+                            <input type="number" id="weight_15" value="3" step="0.5" min="0" class="param-input">
+                        </div>
+                        <div class="param-group">
+                            <label for="weight_30">30天权重</label>
+                            <input type="number" id="weight_30" value="2" step="0.5" min="0" class="param-input">
+                        </div>
+                        <div class="param-group">
+                            <label for="weight_90">90天权重</label>
+                            <input type="number" id="weight_90" value="1" step="0.5" min="0" class="param-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 计算按钮 -->
+                <button type="button" class="calc-button" id="calculate-btn" onclick="calculateRucang()" disabled>
+                    开始计算
+                </button>
+                
+                <!-- 加载提示 -->
+                <div class="loading" id="loading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>计算中...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 计算结果区域 -->
+<section class="result-section" id="result-section" style="display: none;">
+    <!-- 汇总统计 -->
+    <div class="summary-cards">
+        <div class="summary-card">
+            <div class="summary-icon">📦</div>
+            <div class="summary-content">
+                <h4>需要入仓商品</h4>
+                <p class="summary-value" id="need-count">--</p>
+                <p class="summary-unit">个商品</p>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon">📊</div>
+            <div class="summary-content">
+                <h4>入仓产品件数</h4>
+                <p class="summary-value" id="total-qty">--</p>
+                <p class="summary-unit">件</p>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon">📋</div>
+            <div class="summary-content">
+                <h4>总商品数</h4>
+                <p class="summary-value" id="total-products">--</p>
+                <p class="summary-unit">个</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果表格 -->
+    <div class="result-table-container">
+        <div class="result-header">
+            <h3>📊 计算结果</h3>
+            <button class="export-btn" onclick="exportResults()">
+                <span>📥</span>
+                <span>导出Excel</span>
+            </button>
+        </div>
+        <div class="table-wrapper">
+            <table class="result-table" id="result-table">
+                <thead>
+                    <tr>
+                        <th>商品ID</th>
+                        <th>7天日均</th>
+                        <th>15天日均</th>
+                        <th>30天日均</th>
+                        <th>90天日均</th>
+                        <th>预估30天销量</th>
+                        <th>现有库存</th>
+                        <th>建议入仓数量</th>
+                        <th>是否需入仓</th>
+                    </tr>
+                </thead>
+                <tbody id="result-tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 计算逻辑说明 -->
+    <div class="logic-explanation">
+        <h4>📐 本次计算参数</h4>
+        <div class="logic-content">
+            <p><strong>安全系数：</strong><span id="used-safety">--</span></p>
+            <p><strong>权重设置：</strong>7天=<span id="used-w7">--</span>，15天=<span id="used-w15">--</span>，30天=<span id="used-w30">--</span>，90天=<span id="used-w90">--</span></p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">
+                通过加权平均算法，近期销量具有更高权重，预估结果更贴近实际趋势。安全系数用于预留缓冲库存，应对销量波动。
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- 返回链接 -->
+<section class="related-section">
+    <h3 class="related-title">返回</h3>
+    <div class="related-grid">
+        <a href="{{ url_for('platform_index', platform_id='jd') }}" class="related-card">
+            <span class="related-icon">📦</span>
+            <span class="related-name">京东首页</span>
+        </a>
+        <a href="{{ url_for('jd_maobao') }}" class="related-card">
+            <span class="related-icon">🛡️</span>
+            <span class="related-name">自营毛保</span>
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let uploadedFile = null;
+let calculatedData = null;
+
+// 文件上传区域点击
+document.getElementById('file-upload-area').addEventListener('click', function(e) {
+    if (e.target.classList.contains('reupload-btn')) return;
+    document.getElementById('file-input').click();
+});
+
+// 文件选择
+document.getElementById('file-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        handleFileUpload(file);
+    }
+});
+
+// 拖拽上传
+const uploadArea = document.getElementById('file-upload-area');
+uploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.name.endsWith('.xlsx')) {
+        handleFileUpload(file);
+    } else {
+        alert('请上传.xlsx格式文件');
+    }
+});
+
+function handleFileUpload(file) {
+    uploadedFile = file;
+    document.getElementById('upload-placeholder').style.display = 'none';
+    document.getElementById('upload-success').style.display = 'flex';
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('calculate-btn').disabled = false;
+}
+
+function resetUpload() {
+    uploadedFile = null;
+    document.getElementById('file-input').value = '';
+    document.getElementById('upload-placeholder').style.display = 'flex';
+    document.getElementById('upload-success').style.display = 'none';
+    document.getElementById('calculate-btn').disabled = true;
+    document.getElementById('result-section').style.display = 'none';
+}
+
+async function calculateRucang() {
+    if (!uploadedFile) {
+        alert('请先上传文件');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', uploadedFile);
+    formData.append('safety_factor', document.getElementById('safety_factor').value);
+    formData.append('weight_7', document.getElementById('weight_7').value);
+    formData.append('weight_15', document.getElementById('weight_15').value);
+    formData.append('weight_30', document.getElementById('weight_30').value);
+    formData.append('weight_90', document.getElementById('weight_90').value);
+
+    // 显示加载
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('calculate-btn').disabled = true;
+
+    try {
+        const response = await fetch('/platform/jd/rucang/calculate', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            calculatedData = result;
+            displayResults(result);
+        } else {
+            alert('计算失败: ' + result.error);
+        }
+    } catch (error) {
+        alert('请求失败: ' + error.message);
+    } finally {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('calculate-btn').disabled = false;
+    }
+}
+
+function displayResults(result) {
+    // 显示结果区域
+    document.getElementById('result-section').style.display = 'block';
+    
+    // 滚动到结果区域
+    setTimeout(() => {
+        document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+
+    // 汇总统计
+    document.getElementById('need-count').textContent = result.summary.need_rucang_count;
+    document.getElementById('total-qty').textContent = result.summary.total_rucang_qty.toLocaleString();
+    document.getElementById('total-products').textContent = result.summary.total_products;
+
+    // 表格数据
+    const tbody = document.getElementById('result-tbody');
+    tbody.innerHTML = '';
+    
+    result.data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row['商品ID']}</td>
+            <td>${row['7天日均']}</td>
+            <td>${row['15天日均']}</td>
+            <td>${row['30天日均']}</td>
+            <td>${row['90天日均']}</td>
+            <td>${row['预估30天销量']}</td>
+            <td>${row['现有库存']}</td>
+            <td class="highlight-number">${row['建议入仓数量']}</td>
+            <td><span class="status-badge ${row['是否需入仓'] === '是' ? 'need' : 'no-need'}">${row['是否需入仓']}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // 参数说明
+    document.getElementById('used-safety').textContent = result.params.safety_factor;
+    document.getElementById('used-w7').textContent = result.params.weights['7天'];
+    document.getElementById('used-w15').textContent = result.params.weights['15天'];
+    document.getElementById('used-w30').textContent = result.params.weights['30天'];
+    document.getElementById('used-w90').textContent = result.params.weights['90天'];
+}
+
+async function exportResults() {
+    if (!calculatedData) {
+        alert('没有可导出的数据');
+        return;
+    }
+
+    try {
+        const response = await fetch('/platform/jd/rucang/export', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                results: calculatedData.data,
+                summary: calculatedData.summary,
+                params: calculatedData.params
+            })
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '入仓预估结果_' + new Date().toISOString().slice(0, 10) + '.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } else {
+            alert('导出失败');
+        }
+    } catch (error) {
+        alert('导出失败: ' + error.message);
+    }
+}
+</script>
+{% endblock %}
+
+{% set platforms = platforms %}
+{% set metrics = metrics %}
+
+
+
+
+

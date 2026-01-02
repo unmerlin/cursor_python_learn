@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}京东 - 自营毛保 - 电商运营数据分析{% endblock %}
+
+{% block content %}
+<!-- 页面头部 -->
+<section class="page-header">
+    <div class="breadcrumb">
+        <a href="{{ url_for('index') }}">首页</a>
+        <span>/</span>
+        <a href="{{ url_for('platform_index', platform_id='jd') }}">京东</a>
+        <span>/</span>
+        <span>自营毛保</span>
+    </div>
+    
+    <div class="page-header-content">
+        <div class="page-icon" style="--platform-color: {{ platform.color }}">🛡️</div>
+        <div>
+            <h1 class="page-title">京东 - 自营毛保</h1>
+            <p class="page-desc">京东自营毛利保护计算工具</p>
+        </div>
+    </div>
+</section>
+
+<!-- 公式卡片 -->
+<section class="formulas-section">
+    <div class="formula-card" id="maobao">
+        <!-- 公式头部 -->
+        <div class="formula-header">
+            <div class="formula-title-group">
+                <h2 class="formula-name">毛利保护（毛保）</h2>
+                <span class="formula-english">Gross Profit Protection</span>
+            </div>
+        </div>
+
+        <!-- 公式内容区 -->
+        <div class="formula-body">
+            <!-- 左侧：公式说明 -->
+            <div class="formula-info">
+                <!-- 公式表达式 -->
+                <div class="formula-expression">
+                    <div class="expression-label">计算公式</div>
+                    <div class="expression-content">毛保补差 = 到手价 × 承诺毛保 - (到手价 - 采购价)</div>
+                </div>
+
+                <!-- 公式说明 -->
+                <div class="formula-description">
+                    <h4 class="info-label">📖 公式说明</h4>
+                    <p>当京东毛利率低于承诺比例时，需要补偿给京东的金额。</p>
+                    <ul class="formula-notes">
+                        <li>毛保补差 <strong>&lt; 0</strong>：无需补差，实际回款 = 采购价</li>
+                        <li>毛保补差 <strong>≥ 0</strong>：需要补差，实际回款 = 采购价 - 毛保补差</li>
+                    </ul>
+                </div>
+
+                <!-- 应用场景 -->
+                <div class="formula-application">
+                    <h4 class="info-label">💡 应用场景</h4>
+                    <p>活动定价时，用来预估返利单产生的毛保金额。帮助商家在制定促销价格时，提前计算可能需要补差的金额，避免利润损失。</p>
+                </div>
+
+                <!-- 示例数据 -->
+                <div class="formula-example">
+                    <h4 class="info-label">📊 示例</h4>
+                    <div class="example-detail">
+                        <div class="example-params">
+                            <span class="example-item">京东价: 50元</span>
+                            <span class="example-item">到手价: 38元</span>
+                            <span class="example-item">采购价: 30元</span>
+                            <span class="example-item">承诺毛保: 20%</span>
+                        </div>
+                        <div class="example-calc">
+                            <p><strong>计算过程：</strong></p>
+                            <p>毛保补差 = 38 × 0.2 - (38 - 30) = 7.6 - 8 = <strong>-0.4元</strong></p>
+                            <p class="result-note success">因为补差 &lt; 0，无需补差，实际回款 = 采购价 = 30元</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 临界点分析 -->
+                <div class="formula-critical">
+                    <h4 class="info-label">📐 临界点分析</h4>
+                    <div class="critical-content">
+                        <p>设到手价为 x，令毛保补差 = 0：</p>
+                        <div class="critical-formula">
+                            <p>x × 承诺毛保 - (x - 采购价) = 0</p>
+                            <p>x × 承诺毛保 = x - 采购价</p>
+                            <p>x × (承诺毛保 - 1) = -采购价</p>
+                            <p>x = 采购价 ÷ (1 - 承诺毛保)</p>
+                        </div>
+                        <p class="critical-example">
+                            示例：采购价30元，承诺毛保20%<br>
+                            临界点 = 30 ÷ (1 - 0.2) = 30 ÷ 0.8 = <strong>37.5元</strong><br>
+                            即到手价 ≥ 37.5元时，无需补差（特殊约定除外）
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：计算器 -->
+            <div class="formula-calculator">
+                <h4 class="calculator-title">🧮 在线计算</h4>
+                <form class="calculator-form" id="maobao-form">
+                    <div class="input-group">
+                        <label for="jd_price">京东价</label>
+                        <div class="input-wrapper">
+                            <input type="number" 
+                                   id="jd_price" 
+                                   name="jd_price"
+                                   class="calc-input"
+                                   placeholder="请输入"
+                                   step="0.01"
+                                   min="0">
+                            <span class="input-unit">元</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="final_price">到手价</label>
+                        <div class="input-wrapper">
+                            <input type="number" 
+                                   id="final_price" 
+                                   name="final_price"
+                                   class="calc-input"
+                                   placeholder="请输入"
+                                   step="0.01"
+                                   min="0">
+                            <span class="input-unit">元</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="purchase_price">采购价</label>
+                        <div class="input-wrapper">
+                            <input type="number" 
+                                   id="purchase_price" 
+                                   name="purchase_price"
+                                   class="calc-input"
+                                   placeholder="请输入"
+                                   step="0.01"
+                                   min="0">
+                            <span class="input-unit">元</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="maobao_rate">承诺毛保</label>
+                        <div class="input-wrapper">
+                            <input type="number" 
+                                   id="maobao_rate" 
+                                   name="maobao_rate"
+                                   class="calc-input"
+                                   placeholder="请输入"
+                                   step="0.1"
+                                   min="0"
+                                   max="100">
+                            <span class="input-unit">%</span>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="calc-button" onclick="calculateMaobao()">
+                        计算结果
+                    </button>
+                    
+                    <div class="calc-result" id="maobao_result">
+                        <span class="result-label">计算结果</span>
+                        <div class="result-details">
+                            <div class="result-item">
+                                <span class="result-name">毛保补差</span>
+                                <span class="result-value" id="result_bucha">--</span>
+                                <span class="result-unit">元</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-name">是否补差</span>
+                                <span class="result-value" id="result_status">--</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-name">实际回款</span>
+                                <span class="result-value" id="result_huikuan">--</span>
+                                <span class="result-unit">元</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-name">临界到手价</span>
+                                <span class="result-value" id="result_critical">--</span>
+                                <span class="result-unit">元</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 返回链接 -->
+<section class="related-section">
+    <h3 class="related-title">返回</h3>
+    <div class="related-grid">
+        <a href="{{ url_for('platform_index', platform_id='jd') }}" class="related-card">
+            <span class="related-icon">📦</span>
+            <span class="related-name">京东首页</span>
+        </a>
+        {% for metric_id, metric_info in metrics.items() %}
+        <a href="{{ url_for('platform_metric', platform_id='jd', metric_id=metric_id) }}" class="related-card">
+            <span class="related-icon">{{ metric_info.icon }}</span>
+            <span class="related-name">{{ metric_info.title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function calculateMaobao() {
+    const jdPrice = parseFloat(document.getElementById('jd_price').value);
+    const finalPrice = parseFloat(document.getElementById('final_price').value);
+    const purchasePrice = parseFloat(document.getElementById('purchase_price').value);
+    const maobaoRate = parseFloat(document.getElementById('maobao_rate').value) / 100;
+    
+    const resultDiv = document.getElementById('maobao_result');
+    const buchaEl = document.getElementById('result_bucha');
+    const statusEl = document.getElementById('result_status');
+    const huikuanEl = document.getElementById('result_huikuan');
+    const criticalEl = document.getElementById('result_critical');
+    
+    // 验证输入
+    const inputs = document.querySelectorAll('#maobao-form .calc-input');
+    let allFilled = true;
+    
+    inputs.forEach(input => {
+        const value = parseFloat(input.value);
+        if (isNaN(value) || input.value === '') {
+            allFilled = false;
+            input.classList.add('error');
+        } else {
+            input.classList.remove('error');
+        }
+    });
+    
+    if (!allFilled) {
+        buchaEl.textContent = '请填写所有字段';
+        resultDiv.classList.add('error');
+        resultDiv.classList.remove('success');
+        return;
+    }
+    
+    // 计算毛保补差
+    // 毛保补差 = 到手价 × 承诺毛保 - (到手价 - 采购价)
+    const bucha = finalPrice * maobaoRate - (finalPrice - purchasePrice);
+    
+    // 计算临界点
+    // 临界点 = 采购价 ÷ (1 - 承诺毛保)
+    const critical = purchasePrice / (1 - maobaoRate);
+    
+    // 计算实际回款
+    let huikuan;
+    let status;
+    
+    if (bucha < 0) {
+        // 无需补差
+        huikuan = purchasePrice;
+        status = '无需补差';
+        statusEl.classList.add('success-text');
+        statusEl.classList.remove('warning-text');
+    } else {
+        // 需要补差
+        huikuan = purchasePrice - bucha;
+        status = '需要补差';
+        statusEl.classList.add('warning-text');
+        statusEl.classList.remove('success-text');
+    }
+    
+    // 显示结果
+    buchaEl.textContent = bucha.toFixed(2);
+    statusEl.textContent = status;
+    huikuanEl.textContent = huikuan.toFixed(2);
+    criticalEl.textContent = critical.toFixed(2);
+    
+    resultDiv.classList.remove('error');
+    resultDiv.classList.add('success');
+    
+    // 动画效果
+    resultDiv.classList.add('animate');
+    setTimeout(() => resultDiv.classList.remove('animate'), 300);
+}
+
+// 输入框事件
+document.querySelectorAll('#maobao-form .calc-input').forEach(input => {
+    input.addEventListener('input', function() {
+        this.classList.remove('error');
+        const resultDiv = document.getElementById('maobao_result');
+        resultDiv.classList.remove('success', 'error');
+    });
+    
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            calculateMaobao();
+        }
+    });
+});
+</script>
+{% endblock %}
+
+{% set platforms = platforms %}
+{% set metrics = metrics %}
+

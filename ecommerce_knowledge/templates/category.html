@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}{{ platform.name }} - {{ metric_info.title }} - 电商运营数据分析{% endblock %}
+
+{% block content %}
+<!-- 页面头部 -->
+<section class="page-header">
+    <div class="breadcrumb">
+        <a href="{{ url_for('index') }}">首页</a>
+        <span>/</span>
+        <a href="{{ url_for('platform_index', platform_id=platform_id) }}">{{ platform.name }}</a>
+        <span>/</span>
+        <span>{{ metric_info.title }}</span>
+    </div>
+    
+    <div class="page-header-content">
+        <div class="page-icon" style="--platform-color: {{ platform.color }}">{{ platform.icon }}</div>
+        <div>
+            <h1 class="page-title">{{ platform.name }} - {{ metric_info.title }}</h1>
+            <p class="page-desc">{{ metric_info.description }}</p>
+        </div>
+    </div>
+</section>
+
+<!-- 公式导航 -->
+<section class="formula-nav">
+    <div class="formula-nav-container">
+        <span class="nav-label">快速跳转：</span>
+        {% for formula in metric.formulas %}
+        <a href="#{{ formula.id }}" class="formula-nav-link">{{ formula.name.split('（')[0] }}</a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- 公式列表 -->
+<section class="formulas-section">
+    {% for formula in metric.formulas %}
+    <div class="formula-card" id="{{ formula.id }}">
+        <!-- 公式头部 -->
+        <div class="formula-header">
+            <div class="formula-title-group">
+                <h2 class="formula-name">{{ formula.name }}</h2>
+                <span class="formula-english">{{ formula.english }}</span>
+            </div>
+        </div>
+
+        <!-- 公式内容区 -->
+        <div class="formula-body">
+            <!-- 左侧：公式说明 -->
+            <div class="formula-info">
+                <!-- 公式表达式 -->
+                <div class="formula-expression">
+                    <div class="expression-label">计算公式</div>
+                    <div class="expression-content">{{ formula.formula }}</div>
+                </div>
+
+                <!-- 公式说明 -->
+                <div class="formula-description">
+                    <h4 class="info-label">📖 公式说明</h4>
+                    <p>{{ formula.description }}</p>
+                </div>
+
+                <!-- 应用场景 -->
+                <div class="formula-application">
+                    <h4 class="info-label">💡 应用场景</h4>
+                    <p>{{ formula.application }}</p>
+                </div>
+
+                <!-- 示例数据 -->
+                <div class="formula-example">
+                    <h4 class="info-label">📊 示例</h4>
+                    <div class="example-content">
+                        {% for var in formula.variables %}
+                        <span class="example-item">{{ var.label }}: {{ formula.example[var.name] }}{{ var.unit }}</span>
+                        {% endfor %}
+                        <span class="example-result">
+                            → 结果: <strong>{{ formula.example.result }}{{ formula.result_unit }}</strong>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：计算器 -->
+            <div class="formula-calculator">
+                <h4 class="calculator-title">🧮 在线计算</h4>
+                <form class="calculator-form" data-formula-id="{{ formula.id }}" data-result-unit="{{ formula.result_unit }}">
+                    {% for var in formula.variables %}
+                    <div class="input-group">
+                        <label for="{{ formula.id }}_{{ var.name }}">{{ var.label }}</label>
+                        <div class="input-wrapper">
+                            <input type="number" 
+                                   id="{{ formula.id }}_{{ var.name }}" 
+                                   name="{{ var.name }}"
+                                   class="calc-input"
+                                   placeholder="请输入"
+                                   step="any"
+                                   data-var-name="{{ var.name }}">
+                            <span class="input-unit">{{ var.unit }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <button type="button" class="calc-button" onclick="calculate('{{ formula.id }}')">
+                        计算结果
+                    </button>
+                    
+                    <div class="calc-result" id="{{ formula.id }}_result">
+                        <span class="result-label">计算结果</span>
+                        <span class="result-value">--</span>
+                        <span class="result-unit">{{ formula.result_unit }}</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+<!-- 相关指标 -->
+<section class="related-section">
+    <h3 class="related-title">其他指标</h3>
+    <div class="related-grid">
+        {% for metric_id_item, metric_info_item in metrics.items() %}
+        {% if metric_id_item != metric_id %}
+        <a href="{{ url_for('platform_metric', platform_id=platform_id, metric_id=metric_id_item) }}" class="related-card">
+            <span class="related-icon">{{ metric_info_item.icon }}</span>
+            <span class="related-name">{{ metric_info_item.title }}</span>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 公式计算函数映射
+const formulaCalculators = {
+    // 销售指标
+    'gmv': (vars) => vars.orders * vars.avg_price,
+    'sales_amount': (vars) => vars.uv * (vars.cvr / 100) * vars.aov,
+    'aov': (vars) => vars.sales / vars.orders,
+    'per_customer_value': (vars) => vars.sales / vars.buyers,
+    
+    // 转化指标
+    'cvr': (vars) => (vars.orders / vars.uv) * 100,
+    'ctr': (vars) => (vars.clicks / vars.impressions) * 100,
+    'add_cart_rate': (vars) => (vars.add_cart_users / vars.uv) * 100,
+    'collect_rate': (vars) => (vars.collect_users / vars.uv) * 100,
+    'payment_rate': (vars) => (vars.paid_orders / vars.orders) * 100,
+    
+    // 流量指标
+    'pv': (vars) => vars.page_views,
+    'uv': (vars) => vars.visitors,
+    'avg_page_views': (vars) => vars.pv / vars.uv,
+    'bounce_rate': (vars) => (vars.single_page_visitors / vars.uv) * 100,
+    'avg_stay_time': (vars) => vars.total_time / vars.sessions,
+    
+    // 复购指标
+    'repurchase_rate': (vars) => (vars.repeat_buyers / vars.total_buyers) * 100,
+    'repurchase_frequency': (vars) => vars.total_orders / vars.buyers,
+    'ltv': (vars) => vars.aov * vars.frequency * vars.lifetime,
+    'retention_rate': (vars) => (vars.active_users / vars.initial_users) * 100,
+    
+    // 库存指标
+    'inventory_turnover': (vars) => vars.cogs / vars.avg_inventory,
+    'inventory_days': (vars) => 365 / vars.turnover,
+    'sell_through_rate': (vars) => (vars.sold / (vars.begin_inv + vars.purchase)) * 100,
+    'stockout_rate': (vars) => (vars.out_of_stock / vars.total_sku) * 100,
+    
+    // 营销指标
+    'roi': (vars) => ((vars.revenue - vars.cost) / vars.cost) * 100,
+    'roas': (vars) => vars.ad_revenue / vars.ad_spend,
+    'cac': (vars) => vars.marketing_cost / vars.new_customers,
+    'cpc': (vars) => vars.ad_spend / vars.clicks,
+    'cpm': (vars) => (vars.ad_spend / vars.impressions) * 1000,
+    'gross_profit_margin': (vars) => ((vars.revenue - vars.cogs) / vars.revenue) * 100
+};
+
+function calculate(formulaId) {
+    const form = document.querySelector(`[data-formula-id="${formulaId}"]`);
+    const resultDiv = document.getElementById(`${formulaId}_result`);
+    const resultValue = resultDiv.querySelector('.result-value');
+    const inputs = form.querySelectorAll('.calc-input');
+    
+    // 收集变量值
+    const vars = {};
+    let allFilled = true;
+    
+    inputs.forEach(input => {
+        const varName = input.dataset.varName;
+        const value = parseFloat(input.value);
+        
+        if (isNaN(value) || input.value === '') {
+            allFilled = false;
+            input.classList.add('error');
+        } else {
+            input.classList.remove('error');
+            vars[varName] = value;
+        }
+    });
+    
+    if (!allFilled) {
+        resultValue.textContent = '请填写所有字段';
+        resultDiv.classList.add('error');
+        return;
+    }
+    
+    // 计算结果
+    const calculator = formulaCalculators[formulaId];
+    if (calculator) {
+        try {
+            let result = calculator(vars);
+            
+            // 检查结果有效性
+            if (isNaN(result) || !isFinite(result)) {
+                resultValue.textContent = '计算错误';
+                resultDiv.classList.add('error');
+                return;
+            }
+            
+            // 格式化结果
+            if (result >= 10000) {
+                resultValue.textContent = result.toLocaleString('zh-CN', {
+                    maximumFractionDigits: 2
+                });
+            } else {
+                resultValue.textContent = result.toFixed(2);
+            }
+            
+            resultDiv.classList.remove('error');
+            resultDiv.classList.add('success');
+            
+            // 添加动画效果
+            resultDiv.classList.add('animate');
+            setTimeout(() => resultDiv.classList.remove('animate'), 300);
+            
+        } catch (e) {
+            resultValue.textContent = '计算错误';
+            resultDiv.classList.add('error');
+        }
+    }
+}
+
+// 输入框实时验证
+document.querySelectorAll('.calc-input').forEach(input => {
+    input.addEventListener('input', function() {
+        this.classList.remove('error');
+        const resultDiv = this.closest('.calculator-form').querySelector('.calc-result');
+        resultDiv.classList.remove('success', 'error');
+    });
+    
+    // 回车键触发计算
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const formulaId = this.closest('.calculator-form').dataset.formulaId;
+            calculate(formulaId);
+        }
+    });
+});
+</script>
+{% endblock %}
+
+{% set platforms = platforms %}
+{% set metrics = metrics %}

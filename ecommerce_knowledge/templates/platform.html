@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ platform.name }} - 电商运营数据分析{% endblock %}
+
+{% block content %}
+<!-- 平台头部 -->
+<section class="platform-hero" style="--platform-color: {{ platform.color }}">
+    <div class="platform-hero-content">
+        <div class="platform-icon-large">{{ platform.icon }}</div>
+        <h1 class="platform-title">{{ platform.name }}</h1>
+        <p class="platform-desc">查看 {{ platform.name }} 平台的所有数据指标公式</p>
+    </div>
+</section>
+
+<!-- 指标导航 -->
+<section class="metrics-nav-section">
+    <div class="section-header">
+        <h2 class="section-title">选择指标类别</h2>
+    </div>
+    
+    <div class="metrics-nav-grid">
+        {% for metric_id, metric_info in metrics.items() %}
+        <a href="{{ url_for('platform_metric', platform_id=platform_id, metric_id=metric_id) }}" 
+           class="metric-nav-card">
+            <div class="metric-nav-icon">{{ metric_info.icon }}</div>
+            <h3 class="metric-nav-title">{{ metric_info.title }}</h3>
+            <p class="metric-nav-desc">{{ metric_info.description }}</p>
+            <div class="metric-nav-count">{{ all_categories[metric_id].formulas|length }} 个公式</div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% set platforms = platforms %}
+{% set metrics = metrics %}
+
+
+
+
+
+
+

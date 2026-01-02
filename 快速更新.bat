@@ -11,6 +11,7 @@ echo 正在检查 Git 状态...
 git status --short
 echo.
 
+git rev-parse --git-dir >nul 2>&1
 if %errorlevel% neq 0 (
     echo 错误：当前目录不是 Git 仓库！
     pause
@@ -70,20 +71,20 @@ if %errorlevel% neq 0 (
 
 echo.
 echo 正在生成提交信息...
-for /f "tokens=1-3 delims=/ " %%a in ('date /t') do set mydate=%%c-%%a-%%b
-for /f "tokens=1-2 delims=: " %%a in ('time /t') do set mytime=%%a%%b
-set mytime=%mytime: =0%
-set commit_msg=快速更新 %mydate% %mytime%
+
+REM 使用 PowerShell 获取标准格式日期时间（更可靠）
+for /f "delims=" %%i in ('powershell -Command "Get-Date -Format 'yyyy-MM-dd HH:mm'"') do set datetime=%%i
+set commit_msg=快速更新 %datetime%
 
 echo 提交信息：%commit_msg%
 echo.
 echo 正在提交更改...
 git commit -m "%commit_msg%"
 if %errorlevel% neq 0 (
-    echo 提示：没有新的更改需要提交
-    echo 检查是否有未推送的提交...
-) else (
-    echo ✓ 提交成功
+    echo.
+    echo 警告：提交失败，可能没有需要提交的更改
+    pause
+    exit /b 1
 )
 
 echo.
@@ -97,7 +98,7 @@ if %errorlevel% neq 0 (
 
 echo.
 echo ========================================
-echo    ✓ 快速更新成功！
+echo    成功！已更新到 GitHub
 echo ========================================
 echo.
 pause
@@ -130,6 +131,7 @@ echo.
 echo 正在提交更改...
 git commit -m "%commit_msg%"
 if %errorlevel% neq 0 (
+    echo.
     echo 警告：提交失败，可能没有需要提交的更改
     pause
     exit /b 1
@@ -146,7 +148,7 @@ if %errorlevel% neq 0 (
 
 echo.
 echo ========================================
-echo    ✓ 更新成功！
+echo    成功！已更新到 GitHub
 echo ========================================
 echo.
 pause
@@ -160,12 +162,3 @@ goto end
 
 :end
 exit /b 0
-
-
-
-
-
-
-
-
-

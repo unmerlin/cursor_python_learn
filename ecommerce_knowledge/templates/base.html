@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}电商运营数据分析{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-logo">
+                <span class="logo-icon">📈</span>
+                <span class="logo-text">电商数据公式</span>
+            </a>
+            <button class="nav-toggle" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主布局容器 -->
+    <div class="layout-container">
+        <!-- 左侧固定侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-header">
+                    <h3 class="sidebar-title">平台选择</h3>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    {% if platforms is defined %}
+                        {% for plat_id, plat_data in platforms.items() %}
+                        <div class="platform-group {% if platform_id is defined and platform_id == plat_id %}active{% endif %}">
+                            <a href="{{ url_for('platform_index', platform_id=plat_id) }}" 
+                               class="platform-link {% if platform_id is defined and platform_id == plat_id %}active{% endif %}">
+                                <span class="platform-icon">{{ plat_data.icon }}</span>
+                                <span class="platform-name">{{ plat_data.name }}</span>
+                                <span class="platform-arrow">▼</span>
+                            </a>
+                            
+                            <!-- 指标子菜单 -->
+                            <div class="metrics-submenu {% if platform_id is defined and platform_id == plat_id %}active{% endif %}">
+                                {% if metrics is defined %}
+                                    {% for metric_id_item, metric_info in metrics.items() %}
+                                    <a href="{{ url_for('platform_metric', platform_id=plat_id, metric_id=metric_id_item) }}" 
+                                       class="metric-link {% if platform_id is defined and platform_id == plat_id and metric_id is defined and metric_id == metric_id_item %}active{% endif %}">
+                                        <span class="metric-icon">{{ metric_info.icon }}</span>
+                                        <span class="metric-name">{{ metric_info.title }}</span>
+                                    </a>
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                <!-- 京东专属功能 -->
+                                {% if plat_id == 'jd' %}
+                                <div class="submenu-divider"></div>
+                                <a href="{{ url_for('jd_maobao') }}" 
+                                   class="metric-link special-link {% if request.endpoint == 'jd_maobao' %}active{% endif %}">
+                                    <span class="metric-icon">🛡️</span>
+                                    <span class="metric-name">自营毛保</span>
+                                </a>
+                                <a href="{{ url_for('jd_rucang') }}" 
+                                   class="metric-link special-link {% if request.endpoint == 'jd_rucang' %}active{% endif %}">
+                                    <span class="metric-icon">📦</span>
+                                    <span class="metric-name">入仓预估</span>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </nav>
+                
+                <!-- 活动效果预测 -->
+                <div class="sidebar-header" style="margin-top: var(--spacing-lg);">
+                    <h3 class="sidebar-title">活动效果预测</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="platform-group {% if request.endpoint == 'ab_test' %}active{% endif %}">
+                        <a href="{{ url_for('ab_test') }}" 
+                           class="platform-link {% if request.endpoint == 'ab_test' %}active{% endif %}">
+                            <span class="platform-icon">🔬</span>
+                            <span class="platform-name">A/B测试</span>
+                        </a>
+                    </div>
+                </nav>
+                
+                <!-- 数据可视化分析 -->
+                <div class="sidebar-header" style="margin-top: var(--spacing-lg);">
+                    <h3 class="sidebar-title">数据可视化分析</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="platform-group {% if request.endpoint == 'funnel_chart' %}active{% endif %}">
+                        <a href="{{ url_for('funnel_chart') }}" 
+                           class="platform-link {% if request.endpoint == 'funnel_chart' %}active{% endif %}">
+                            <span class="platform-icon">📊</span>
+                            <span class="platform-name">漏斗图</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- 右侧主内容区 -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu">
+        {% if platforms is defined %}
+            <a href="{{ url_for('index') }}" class="mobile-link">首页</a>
+            {% for plat_id, plat_data in platforms.items() %}
+            <a href="{{ url_for('platform_index', platform_id=plat_id) }}" class="mobile-link">
+                {{ plat_data.icon }} {{ plat_data.name }}
+            </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-text">电商运营数据分析知识库 © 2024</p>
+            <p class="footer-desc">帮助电商运营人员快速掌握核心数据指标</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
